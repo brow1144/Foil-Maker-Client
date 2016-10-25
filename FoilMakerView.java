@@ -173,7 +173,6 @@ public class FoilMakerView extends JFrame implements ActionListener {
         topFrame.setVisible(true);
 
 
-
     }
 
     public void goToStartNewGamePanel() {
@@ -201,10 +200,8 @@ public class FoilMakerView extends JFrame implements ActionListener {
         participantsPanel.add(participantsScrollPane);
 
 
-
         JPanel startGameButtonPanel = new JPanel();
         startGameButtonPanel.setLayout(new FlowLayout());
-
 
 
         createdCodeLabel = new JLabel("            Others Should Use This Code to Join Your Game");
@@ -215,7 +212,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
         createdCode = new JTextArea("GKW");
         createdCodeTextAreaPanel.add(createdCode);
-        
+
 
         startNewGameButton = addButtonToPane("Start Game", startGameButtonPanel);
 
@@ -224,63 +221,93 @@ public class FoilMakerView extends JFrame implements ActionListener {
         topHalf.add(createdCodeTextAreaPanel);
         topHalf.add(participantsPanel);
         topHalf.add(startGameButtonPanel);
-        
+
+    }
+
+    public void goToJoinAGame() {
+
+        goToStartNewGamePanel();
+        topHalf.removeAll();
+
+        JPanel labelForCodePanel = new JPanel();
+        labelForCodePanel.setLayout(new BoxLayout(labelForCodePanel, BoxLayout.Y_AXIS));
+        //labelForCodePanel.setBorder(BorderFactory.createTitledBorder("Label for Code"));
+
+        JPanel codeTextAreaPanel = new JPanel();
+        codeTextAreaPanel.setLayout(new FlowLayout());
+        //codeTextAreaPanel.setBorder(BorderFactory.createTitledBorder("Code Text Area"));
+
+        labelForCodePanel.add(codeTextAreaPanel);
+
+        JPanel joinGameButtonPanel = new JPanel();
+        joinGameButtonPanel.setLayout(new FlowLayout());
+       // joinGameButtonPanel.setBorder(BorderFactory.createTitledBorder("Join Game Button Panel"));
+
+        JLabel labelForCode = new JLabel("Enter the Game Key to Join");
+        JTextField codeTextField = new JTextField();
+
+        labelForCodePanel.add(codeTextField);
+        codeTextAreaPanel.add(labelForCode);
+        addButtonToPane("Join Game", joinGameButtonPanel);
+
+        topHalf.add(labelForCodePanel);
+        topHalf.add(joinGameButtonPanel);
+
     }
 
 
-    public void handleButtonAction (ActionEvent e){
+    public void handleButtonAction(ActionEvent e) {
 
-            JButton button = (JButton) e.getSource();
+        JButton button = (JButton) e.getSource();
 
-            currentUser = usernameTextField.getText();
-
-
-            //Make better later
-            if (currentUser == null) {
-                currentUser = "NOT VALID USERNAME";
-            }
-
-            password = passwordTextField.getText();
-
-            if (password == null) {
-                password = "NOT VALID PASSWORD";
-            }
+        currentUser = usernameTextField.getText();
 
 
-            if (button == loginButton) {
-                //showMessage(username + " is Logging In" + "\n" +
-                //username + " Password is: " + password + "\n");
-                System.out.println(currentUser + " is logging in" + "\n");
-                goToNewGamePanel();
+        //Make better later
+        if (currentUser == null) {
+            currentUser = "NOT VALID USERNAME";
+        }
 
-            } else if (button == registerButton) {
-                //showMessage(username + " is Registering" + "\n" +
-                //username + " Password is: " + password + "\n");
-                System.out.println("New User: " + currentUser + " is Registering" + "\n");
-                goToNewGamePanel();
-            }
+        password = passwordTextField.getText();
 
-            if ( button == startNewGameButton) {
-
-                goToStartNewGamePanel();
+        if (password == null) {
+            password = "NOT VALID PASSWORD";
+        }
 
 
+        if (button == loginButton) {
+            //showMessage(username + " is Logging In" + "\n" +
+            //username + " Password is: " + password + "\n");
+            System.out.println(currentUser + " is logging in" + "\n");
+            goToNewGamePanel();
+
+        } else if (button == registerButton) {
+            //showMessage(username + " is Registering" + "\n" +
+            //username + " Password is: " + password + "\n");
+            System.out.println("New User: " + currentUser + " is Registering" + "\n");
+            goToNewGamePanel();
+        }
+
+        if (button == startNewGameButton) {
+
+            goToStartNewGamePanel();
 
 
-            } else if ( button == joinAGameButton) {
+        } else if (button == joinAGameButton) {
 
+            goToJoinAGame();
 
-
-            }
 
         }
 
-        public void actionPerformed (ActionEvent e){
-            Object source = e.getSource();
-            if (source instanceof JButton) {
-                handleButtonAction(e);
-            }
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        Object source = e.getSource();
+        if (source instanceof JButton) {
+            handleButtonAction(e);
         }
+    }
 
     public void showMessage(String msg) {
 
