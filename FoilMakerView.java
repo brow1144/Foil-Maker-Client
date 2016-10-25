@@ -1,4 +1,5 @@
 import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
+import sun.tools.jstat.Jstat;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,42 +18,42 @@ import java.awt.event.ActionListener;
  */
 
 public class FoilMakerView extends JFrame  {
-    
+
     private FoilMakerController controller;
 
-    private JFrame topFrame;
+    private static JFrame topFrame;
 
-    private JPanel topPanel;
-    private JPanel topHalf;
-    
-    private JPanel bottomMessagePanel;
+    private static JPanel topPanel;
+    private static JPanel topHalf;
 
-    private JTextField usernameTextField;
-    private JPasswordField passwordTextField;
-    private JLabel usernameLabel;
-    private JLabel passwordLabel;
-    private JLabel createdCodeLabel;
-    private JLabel bottomMessage;
-    private JLabel username;
+    private static JPanel bottomMessagePanel;
 
-    private JButton loginButton;
-    private JButton registerButton;
-    private JButton startANewGameButton;
-    private JButton startNewGameButton;
-    private JButton joinAGameButton;
-    private JButton joinGameButton;
-    private JButton submitSuggestionButton;
+    private static JTextField usernameTextField;
+    private static JPasswordField passwordTextField;
+    private static JLabel usernameLabel;
+    private static JLabel passwordLabel;
+    private static JLabel createdCodeLabel;
+    private static JLabel bottomMessage;
+    private static JLabel username;
 
-    private JTextArea createdCode;
-    private JTextArea output;
+    private static JButton loginButton;
+    private static JButton registerButton;
+    private static JButton startANewGameButton;
+    private static JButton startNewGameButton;
+    private static JButton joinAGameButton;
+    private static JButton joinGameButton;
+    private static JButton submitSuggestionButton;
 
-    private JTextField userSuggestion;
+    private static JTextArea createdCode;
+    private static JTextArea output;
 
-    private JScrollPane participantsScrollPane;
+    private static JTextField userSuggestion;
+
+    private static JScrollPane participantsScrollPane;
 
 
-    private String currentUser;
-    private String password;
+    private static String currentUser;
+    private static String password;
 
 
     public FoilMakerView(FoilMakerController controller) {
@@ -75,7 +76,7 @@ public class FoilMakerView extends JFrame  {
 
 //Top Panel (aka usernamePanel)
         topPanel = new JPanel();
-        //topPanel.setBorder(BorderFactory.createTitledBorder("Top Panel"));
+        topPanel.setBorder(BorderFactory.createTitledBorder("Top Panel"));
         username = new JLabel("FoilMaker!");
         topPanel.add(username);
 
@@ -87,15 +88,15 @@ public class FoilMakerView extends JFrame  {
 
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new GridLayout(0, 1));
-        //loginPanel.setBorder(BorderFactory.createTitledBorder("Login"));
+        loginPanel.setBorder(BorderFactory.createTitledBorder("Login"));
 
         JPanel usernamePanel = new JPanel();
         usernamePanel.setLayout(new FlowLayout());
-        //usernamePanel.setBorder(BorderFactory.createTitledBorder("Username Panel"));
+        usernamePanel.setBorder(BorderFactory.createTitledBorder("Username Panel"));
 
         JPanel passwordPanel = new JPanel();
         passwordPanel.setLayout(new FlowLayout());
-        //passwordPanel.setBorder(BorderFactory.createTitledBorder("Password Panel"));
+        passwordPanel.setBorder(BorderFactory.createTitledBorder("Password Panel"));
 
         loginPanel.add(usernamePanel);
         loginPanel.add(passwordPanel);
@@ -103,7 +104,7 @@ public class FoilMakerView extends JFrame  {
 
         usernameTextField = new JTextField(20);
         passwordTextField = new JPasswordField(20);
-        usernameLabel = new JLabel("Userame");
+        usernameLabel = new JLabel("Username");
         passwordLabel = new JLabel("Password");
 
         usernamePanel.add(usernameLabel);
@@ -114,7 +115,7 @@ public class FoilMakerView extends JFrame  {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout());
-        //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
+        buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
 
         loginButton = addButtonToPane("Login", buttonPanel);
 
@@ -363,6 +364,10 @@ public class FoilMakerView extends JFrame  {
     public void showMessage(String msg) {
 
         output.append(msg + "\n");
+    }
+
+    public static void main(String[] args) {
+        FoilMakerView x = new FoilMakerView(new FoilMakerController());
     }
 
 }
