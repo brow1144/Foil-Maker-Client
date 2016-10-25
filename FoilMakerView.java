@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,11 +26,19 @@ public class FoilMakerView extends JFrame implements ActionListener {
     protected JPasswordField passwordTextField;
     protected JLabel usernameLabel;
     protected JLabel passwordLabel;
+    protected JLabel createdCodeLabel;
+    protected JLabel bottomMessage;
 
     protected JButton loginButton;
     protected JButton registerButton;
     protected JButton startNewGameButton;
     protected JButton joinAGameButton;
+
+    protected JTextArea createdCode;
+    protected JTextArea output;
+
+    protected JTextArea participantsTextArea;
+    protected JScrollPane participantsScrollPane;
 
 
     protected String currentUser;
@@ -131,7 +141,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
         bottomMessagePanel = new JPanel();
         //bottomMessagePanel.setBorder(BorderFactory.createTitledBorder("Bottom Message"));
-        JLabel bottomMessage = new JLabel("New User Created");
+        bottomMessage = new JLabel("New User Created");
 
         bottomMessagePanel.add(bottomMessage);
 
@@ -166,6 +176,57 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
     }
 
+    public void goToStartNewGamePanel() {
+
+        goToNewGamePanel();
+        topHalf.removeAll();
+        topHalf.setLayout(new GridLayout(4, 0));
+        bottomMessage = new JLabel("Game Started: You are the Leader");
+        bottomMessagePanel.add(bottomMessage);
+
+
+        JPanel createdCodeLabelPanel = new JPanel();
+        createdCodeLabelPanel.setLayout(new GridLayout(3, 0));
+
+        JPanel createdCodeTextAreaPanel = new JPanel();
+        createdCodeTextAreaPanel.setLayout(new FlowLayout());
+
+        JPanel participantsPanel = new JPanel();
+        participantsPanel.setLayout(new GridLayout(0, 1));
+        participantsPanel.setBorder(BorderFactory.createTitledBorder("Participants"));
+        output = new JTextArea(5, 20);
+        output.setBackground(Color.GREEN);
+        participantsScrollPane = new JScrollPane(output);
+        participantsScrollPane.setBackground(Color.black);
+        participantsPanel.add(participantsScrollPane);
+
+
+
+        JPanel startGameButtonPanel = new JPanel();
+        startGameButtonPanel.setLayout(new FlowLayout());
+
+
+
+        createdCodeLabel = new JLabel("            Others Should Use This Code to Join Your Game");
+        JLabel empty = new JLabel("   ");
+        createdCodeLabelPanel.add(empty);
+        createdCodeLabelPanel.add(empty);
+        createdCodeLabelPanel.add(createdCodeLabel);
+
+        createdCode = new JTextArea("GKW");
+        createdCodeTextAreaPanel.add(createdCode);
+        
+
+        startNewGameButton = addButtonToPane("Start Game", startGameButtonPanel);
+
+
+        topHalf.add(createdCodeLabelPanel);
+        topHalf.add(createdCodeTextAreaPanel);
+        topHalf.add(participantsPanel);
+        topHalf.add(startGameButtonPanel);
+        
+    }
+
 
     public void handleButtonAction (ActionEvent e){
 
@@ -198,6 +259,20 @@ public class FoilMakerView extends JFrame implements ActionListener {
                 System.out.println("New User: " + currentUser + " is Registering" + "\n");
                 goToNewGamePanel();
             }
+
+            if ( button == startNewGameButton) {
+
+                goToStartNewGamePanel();
+
+
+
+
+            } else if ( button == joinAGameButton) {
+
+
+
+            }
+
         }
 
         public void actionPerformed (ActionEvent e){
@@ -206,6 +281,11 @@ public class FoilMakerView extends JFrame implements ActionListener {
                 handleButtonAction(e);
             }
         }
+
+    public void showMessage(String msg) {
+
+        output.append(msg);
+    }
 
 
     public static void main(String[] args) {
