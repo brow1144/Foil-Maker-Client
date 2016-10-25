@@ -1,3 +1,5 @@
+import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -5,51 +7,57 @@ import java.awt.event.ActionListener;
 
 /**
  * CS180 Project03
- * <p>
+ *
  * Foil Login Program.
  *
  * @author Kyle Brown, brow1144, G01
+ *
  * @version 10/24/16
+ *
  */
 
-public class FoilMakerView extends JFrame implements ActionListener {
+public class FoilMakerView extends JFrame  {
+    
+    private FoilMakerController controller;
 
-    protected JFrame topFrame;
+    private JFrame topFrame;
 
-    protected JPanel topPanel;
-    protected JPanel topHalf;
-    protected JPanel bottomMessagePanel;
+    private JPanel topPanel;
+    private JPanel topHalf;
+    
+    private JPanel bottomMessagePanel;
 
-    protected JTextField usernameTextField;
-    protected JPasswordField passwordTextField;
-    protected JLabel usernameLabel;
-    protected JLabel passwordLabel;
-    protected JLabel createdCodeLabel;
-    protected JLabel bottomMessage;
+    private JTextField usernameTextField;
+    private JPasswordField passwordTextField;
+    private JLabel usernameLabel;
+    private JLabel passwordLabel;
+    private JLabel createdCodeLabel;
+    private JLabel bottomMessage;
+    private JLabel username;
 
-    protected JButton loginButton;
-    protected JButton registerButton;
-    protected JButton startANewGameButton;
-    protected JButton startNewGameButton;
-    protected JButton joinAGameButton;
-    protected JButton joinGameButton;
-    protected JButton submitSuggestionButton;
+    private JButton loginButton;
+    private JButton registerButton;
+    private JButton startANewGameButton;
+    private JButton startNewGameButton;
+    private JButton joinAGameButton;
+    private JButton joinGameButton;
+    private JButton submitSuggestionButton;
 
-    protected JTextArea createdCode;
-    protected JTextArea output;
+    private JTextArea createdCode;
+    private JTextArea output;
 
-    protected JTextField userSuggestion;
+    private JTextField userSuggestion;
 
-    protected JTextArea participantsTextArea;
-    protected JScrollPane participantsScrollPane;
-
-
-    protected String currentUser;
-    protected String password;
+    private JScrollPane participantsScrollPane;
 
 
-    public FoilMakerView() {
+    private String currentUser;
+    private String password;
 
+
+    public FoilMakerView(FoilMakerController controller) {
+
+        this.controller = controller;
         goToLoginPanel();
 
     }
@@ -68,7 +76,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
 //Top Panel (aka usernamePanel)
         topPanel = new JPanel();
         //topPanel.setBorder(BorderFactory.createTitledBorder("Top Panel"));
-        JLabel username = new JLabel("FoilMaker!");
+        username = new JLabel("FoilMaker!");
         topPanel.add(username);
 
 
@@ -137,7 +145,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
     protected JButton addButtonToPane(String text, Container pane) {
         JButton button = new JButton(text);
         pane.add(button);
-        button.addActionListener(this);
+        button.addActionListener(controller);
         return button;
     }
 
@@ -147,6 +155,11 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
         goToLoginPanel();
         topHalf.removeAll();
+        topPanel.removeAll();
+        username = new JLabel(currentUser);
+        topPanel.add(username);
+
+
 
         startANewGameButton = addButtonToPane("Start a New Game", topHalf);
         joinAGameButton = addButtonToPane("Join a Game", topHalf);
@@ -164,6 +177,12 @@ public class FoilMakerView extends JFrame implements ActionListener {
         bottomMessagePanel.removeAll();
         bottomMessage = new JLabel("Game Started: You are the Leader");
         bottomMessagePanel.add(bottomMessage);
+
+        topPanel.removeAll();
+        username = new JLabel(currentUser);
+        topPanel.add(username);
+
+
 
 
         JPanel createdCodeLabelPanel = new JPanel();
@@ -219,22 +238,29 @@ public class FoilMakerView extends JFrame implements ActionListener {
         bottomMessage = new JLabel("Welcome!");
         bottomMessagePanel.add(bottomMessage);
 
+        username = new JLabel(currentUser);
+        topPanel.removeAll();
+        topPanel.add(username);
+
+
+
         JPanel labelForCodePanel = new JPanel();
         labelForCodePanel.setLayout(new BoxLayout(labelForCodePanel, BoxLayout.Y_AXIS));
-        //labelForCodePanel.setBorder(BorderFactory.createTitledBorder("Label for Code"));
+        labelForCodePanel.setBorder(BorderFactory.createTitledBorder("Label for Code"));
 
         JPanel codeTextAreaPanel = new JPanel();
         codeTextAreaPanel.setLayout(new FlowLayout());
-        //codeTextAreaPanel.setBorder(BorderFactory.createTitledBorder("Code Text Area"));
+        codeTextAreaPanel.setBorder(BorderFactory.createTitledBorder("Code Text Area"));
 
         labelForCodePanel.add(codeTextAreaPanel);
 
         JPanel joinGameButtonPanel = new JPanel();
         joinGameButtonPanel.setLayout(new FlowLayout());
-       // joinGameButtonPanel.setBorder(BorderFactory.createTitledBorder("Join Game Button Panel"));
+        joinGameButtonPanel.setBorder(BorderFactory.createTitledBorder("Join Game Button Panel"));
 
         JLabel labelForCode = new JLabel("Enter the Game Key to Join");
         JTextField codeTextField = new JTextField();
+
 
         labelForCodePanel.add(codeTextField);
         codeTextAreaPanel.add(labelForCode);
@@ -253,6 +279,12 @@ public class FoilMakerView extends JFrame implements ActionListener {
         bottomMessage = new JLabel("Welcome!");
         bottomMessagePanel.add(bottomMessage);
 
+        topPanel.removeAll();
+        username = new JLabel(currentUser);
+        topPanel.add(username);
+
+
+
 
         JLabel waitingForLeaderLabel = new JLabel("Waiting for Leader", SwingConstants.CENTER);
 
@@ -270,6 +302,11 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
         goToNewGamePanel();
         topHalf.removeAll();
+
+        topPanel.removeAll();
+        username = new JLabel(currentUser);
+        topPanel.add(username);
+
 
         bottomMessage = new JLabel("Enter Your Suggestion");
         bottomMessagePanel.removeAll();
@@ -323,83 +360,9 @@ public class FoilMakerView extends JFrame implements ActionListener {
     }
 
 
-
-    public void handleButtonAction(ActionEvent e) {
-
-        JButton button = (JButton) e.getSource();
-
-        currentUser = usernameTextField.getText();
-
-
-        //Make better later
-        if (currentUser == null) {
-            currentUser = "NOT VALID USERNAME";
-        }
-
-        password = passwordTextField.getText();
-
-        if (password == null) {
-            password = "NOT VALID PASSWORD";
-        }
-
-
-        if (button == loginButton) {
-            //showMessage(username + " is Logging In" + "\n" +
-            //username + " Password is: " + password + "\n");
-            System.out.println(currentUser + " is logging in" + "\n");
-            goToNewGamePanel();
-
-        } else if (button == registerButton) {
-            //showMessage(username + " is Registering" + "\n" +
-            //username + " Password is: " + password + "\n");
-            System.out.println("New User: " + currentUser + " is Registering" + "\n");
-            goToNewGamePanel();
-        }
-
-        if (button == startANewGameButton) {
-
-            goToStartNewGamePanel();
-        }
-
-        if ( button == startNewGameButton) {
-
-            goToLaunchGame();
-
-        }
-
-
-        if (button == joinAGameButton) {
-
-            goToJoinAGame();
-        }
-
-        if ( button == joinGameButton) {
-
-            goToWaitingForLeader();
-
-        }
-
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-        if (source instanceof JButton) {
-            handleButtonAction(e);
-        }
-    }
-
     public void showMessage(String msg) {
 
         output.append(msg + "\n");
-    }
-
-
-    public static void main(String[] args) {
-
-        FoilMakerView frame = new FoilMakerView();
-        frame.pack();
-        frame.setVisible(true);
-
     }
 
 }
