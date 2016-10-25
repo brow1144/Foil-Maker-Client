@@ -1,5 +1,3 @@
-import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -31,11 +29,16 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
     protected JButton loginButton;
     protected JButton registerButton;
+    protected JButton startANewGameButton;
     protected JButton startNewGameButton;
     protected JButton joinAGameButton;
+    protected JButton joinGameButton;
+    protected JButton submitSuggestionButton;
 
     protected JTextArea createdCode;
     protected JTextArea output;
+
+    protected JTextField userSuggestion;
 
     protected JTextArea participantsTextArea;
     protected JScrollPane participantsScrollPane;
@@ -47,28 +50,6 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
     public FoilMakerView() {
 
-/*
-        topFrame = new JFrame();
-        topFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        topFrame.setSize(400, 600);
-
-        topPanel = new JPanel();
-        topPanel.setLayout(new FlowLayout());
-        topPanel.setBorder(BorderFactory.createTitledBorder("Top Panel"));
-
-        topHalf = new JPanel();
-        topHalf.setLayout(new FlowLayout());
-        topHalf.setBorder(BorderFactory.createTitledBorder("Top Half"));
-
-        bottomMessagePanel = new JPanel();
-        bottomMessagePanel.setLayout(new FlowLayout());
-        bottomMessagePanel.setBorder(BorderFactory.createTitledBorder("Bottom Message Panel"));
-
-        topFrame.add(topPanel, BorderLayout.NORTH);
-        topFrame.add(topHalf, BorderLayout.CENTER);
-        topFrame.add(bottomMessagePanel, BorderLayout.SOUTH);
-        */
-
         goToLoginPanel();
 
     }
@@ -78,7 +59,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
         topFrame = new JFrame();
         topFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
-        topFrame.setSize(400, 600);
+        topFrame.setSize(450, 600);
         topFrame.setTitle("FoilMaker");
 
         topFrame.setLocationRelativeTo(null);
@@ -167,7 +148,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
         goToLoginPanel();
         topHalf.removeAll();
 
-        startNewGameButton = addButtonToPane("Start a New Game", topHalf);
+        startANewGameButton = addButtonToPane("Start a New Game", topHalf);
         joinAGameButton = addButtonToPane("Join a Game", topHalf);
 
         topFrame.setVisible(true);
@@ -180,6 +161,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
         goToNewGamePanel();
         topHalf.removeAll();
         topHalf.setLayout(new GridLayout(4, 0));
+        bottomMessagePanel.removeAll();
         bottomMessage = new JLabel("Game Started: You are the Leader");
         bottomMessagePanel.add(bottomMessage);
 
@@ -198,6 +180,11 @@ public class FoilMakerView extends JFrame implements ActionListener {
         participantsScrollPane = new JScrollPane(output);
         participantsScrollPane.setBackground(Color.black);
         participantsPanel.add(participantsScrollPane);
+
+        showMessage("Alice");
+        showMessage("Bob");
+        showMessage("Kyle");
+        showMessage("Angela");
 
 
         JPanel startGameButtonPanel = new JPanel();
@@ -228,6 +215,9 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
         goToStartNewGamePanel();
         topHalf.removeAll();
+        bottomMessagePanel.removeAll();
+        bottomMessage = new JLabel("Welcome!");
+        bottomMessagePanel.add(bottomMessage);
 
         JPanel labelForCodePanel = new JPanel();
         labelForCodePanel.setLayout(new BoxLayout(labelForCodePanel, BoxLayout.Y_AXIS));
@@ -248,12 +238,90 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
         labelForCodePanel.add(codeTextField);
         codeTextAreaPanel.add(labelForCode);
-        addButtonToPane("Join Game", joinGameButtonPanel);
+        joinGameButton = addButtonToPane("Join Game", joinGameButtonPanel);
 
         topHalf.add(labelForCodePanel);
         topHalf.add(joinGameButtonPanel);
 
     }
+
+    public void goToWaitingForLeader() {
+
+        goToNewGamePanel();
+        topHalf.removeAll();
+        bottomMessagePanel.removeAll();
+        bottomMessage = new JLabel("Welcome!");
+        bottomMessagePanel.add(bottomMessage);
+
+
+        JLabel waitingForLeaderLabel = new JLabel("Waiting for Leader", SwingConstants.CENTER);
+
+
+        topHalf.add(waitingForLeaderLabel);
+
+
+        bottomMessagePanel.removeAll();
+        bottomMessage = new JLabel("Joined Game: Waiting For Leader");
+        bottomMessagePanel.add(bottomMessage);
+
+    }
+
+    public void goToLaunchGame() {
+
+        goToNewGamePanel();
+        topHalf.removeAll();
+
+        bottomMessage = new JLabel("Enter Your Suggestion");
+        bottomMessagePanel.removeAll();
+
+        bottomMessagePanel.add(bottomMessage);
+
+        JPanel everythingButButton = new JPanel();
+        everythingButButton.setLayout(new BoxLayout(everythingButButton, BoxLayout.Y_AXIS));
+        //everythingButButton.setBorder(BorderFactory.createTitledBorder("Everything But Button"));
+
+        JPanel displayPanel = new JPanel();
+        displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.Y_AXIS));
+        //displayPanel.setBorder(BorderFactory.createTitledBorder("Display"));
+        JLabel whatIsTheWordFor = new JLabel("What is the Word For ↓");
+        displayPanel.add(whatIsTheWordFor);
+
+
+        JPanel suggestedPhraseTextArea = new JPanel();
+        suggestedPhraseTextArea.setLayout(new FlowLayout());
+        //suggestedPhraseTextArea.setBorder(BorderFactory.createTitledBorder("Suggested Phrase Text Area"));
+
+
+        output = new JTextArea(12, 32);
+        output.setBackground(Color.GREEN);
+        JScrollPane scrollPane = new JScrollPane(output);
+        scrollPane.setBackground(Color.black);
+        suggestedPhraseTextArea.add(scrollPane);
+
+        showMessage("A Group of Zebras");
+
+        displayPanel.add(suggestedPhraseTextArea);
+
+
+
+        JPanel yourSuggestion = new JPanel();
+        yourSuggestion.setLayout(new GridLayout(1, 0));
+        yourSuggestion.setBorder(BorderFactory.createTitledBorder("Your Suggestion"));
+
+        userSuggestion = new JTextField();
+
+        yourSuggestion.add(userSuggestion);
+
+        everythingButButton.add(displayPanel);
+        everythingButButton.add(yourSuggestion);
+
+        topHalf.add(everythingButButton);
+
+        submitSuggestionButton = addButtonToPane("Submit Suggestion", topHalf);
+
+
+    }
+
 
 
     public void handleButtonAction(ActionEvent e) {
@@ -288,15 +356,26 @@ public class FoilMakerView extends JFrame implements ActionListener {
             goToNewGamePanel();
         }
 
-        if (button == startNewGameButton) {
+        if (button == startANewGameButton) {
 
             goToStartNewGamePanel();
+        }
+
+        if ( button == startNewGameButton) {
+
+            goToLaunchGame();
+
+        }
 
 
-        } else if (button == joinAGameButton) {
+        if (button == joinAGameButton) {
 
             goToJoinAGame();
+        }
 
+        if ( button == joinGameButton) {
+
+            goToWaitingForLeader();
 
         }
 
@@ -311,7 +390,7 @@ public class FoilMakerView extends JFrame implements ActionListener {
 
     public void showMessage(String msg) {
 
-        output.append(msg);
+        output.append(msg + "\n");
     }
 
 
