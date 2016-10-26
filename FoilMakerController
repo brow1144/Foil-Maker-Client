@@ -27,6 +27,12 @@ public class FoilMakerController implements ActionListener {
         return response;
     }
 
+    public String StartANewGame(String userToken ) {
+        String response;
+        response = getResponse("STARTNEWGAME--" + userToken);
+        return response;
+    }
+
     public String getResponse(String messageToServer) {
         String serverIP = "localhost";
         int serverPort = 7000;
@@ -70,10 +76,8 @@ public class FoilMakerController implements ActionListener {
 
             if (response.contains("SUCCESS")) {
                 view.goToNewGamePanel();
-                System.out.println(view.usernameTextField.getText());
                 model.setUsername(view.usernameTextField.getText());
                 model.setUserToken(response.substring(26));
-                System.out.println(model.getUserToken());
             } else if (response.contains("INVALIDMESSAGEFORMAT")) {
                 JOptionPane.showMessageDialog(null, "Error: Please Re-Enter",
                         "Error: Login", JOptionPane.ERROR_MESSAGE);
@@ -102,6 +106,10 @@ public class FoilMakerController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: User Already Exists.",
                         "Error: Register", JOptionPane.ERROR_MESSAGE);
             }
+        }
+
+        if (buttonText.equals("Start a New Game")) {
+           // response = StartANewGame()
         }
     }
 
