@@ -51,9 +51,9 @@ public class FoilMakerView extends JFrame  {
 
 
     protected  String currentUser;
-    protected  String password;
 
-    protected String gameCode;
+    protected String usernameForController;
+
 
 
     public FoilMakerView(FoilMakerController controller) {
@@ -210,12 +210,10 @@ public class FoilMakerView extends JFrame  {
         participantsScrollPane.setBackground(Color.black);
         participantsPanel.add(participantsScrollPane);
 
-        /*
-        showMessage("Alice");
-        showMessage("Bob");
-        showMessage("Kyle");
-        showMessage("Angela");
-        */
+
+        showMessage(usernameForController);
+
+
 
 
         JPanel startGameButtonPanel = new JPanel();
