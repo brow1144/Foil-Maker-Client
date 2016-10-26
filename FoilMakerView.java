@@ -18,39 +18,39 @@ public class FoilMakerView extends JFrame  {
 
     protected FoilMakerController controller;
 
-    protected static JFrame topFrame;
+    protected  JFrame topFrame;
 
-    protected static JPanel topPanel;
-    protected static JPanel topHalf;
+    protected  JPanel topPanel;
+    protected  JPanel topHalf;
 
-    protected static JPanel bottomMessagePanel;
+    protected  JPanel bottomMessagePanel;
 
-    protected static JTextField usernameTextField;
-    protected static JPasswordField passwordTextField;
-    protected static JLabel usernameLabel;
-    protected static JLabel passwordLabel;
-    protected static JLabel createdCodeLabel;
-    protected static JLabel bottomMessage;
-    protected static JLabel username;
+    protected  JTextField usernameTextField;
+    protected  JPasswordField passwordTextField;
+    protected  JLabel usernameLabel;
+    protected  JLabel passwordLabel;
+    protected  JLabel createdCodeLabel;
+    protected  JLabel bottomMessage;
+    protected  JLabel username;
 
-    protected static JButton loginButton;
-    protected static JButton registerButton;
-    protected static JButton startANewGameButton;
-    protected static JButton startNewGameButton;
-    protected static JButton joinAGameButton;
-    protected static JButton joinGameButton;
-    protected static JButton submitSuggestionButton;
+    protected  JButton loginButton;
+    protected  JButton registerButton;
+    protected  JButton startANewGameButton;
+    protected  JButton startNewGameButton;
+    protected  JButton joinAGameButton;
+    protected  JButton joinGameButton;
+    protected  JButton submitSuggestionButton;
 
-    protected static JTextArea createdCode;
-    protected static JTextArea output;
+    protected  JTextArea createdCode;
+    protected  JTextArea output;
 
-    protected static JTextField userSuggestion;
+    protected  JTextField userSuggestion;
 
-    protected static JScrollPane participantsScrollPane;
+    protected  JScrollPane participantsScrollPane;
 
 
-    protected static String currentUser;
-    protected static String password;
+    protected  String currentUser;
+    protected  String password;
 
 
     public FoilMakerView(FoilMakerController controller) {
@@ -369,6 +369,7 @@ public class FoilMakerView extends JFrame  {
     }
 
     public static void main(String[] args) {
+        
         FoilMakerView x = new FoilMakerView(new FoilMakerController());
     }
 
