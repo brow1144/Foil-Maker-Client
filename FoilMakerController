@@ -124,7 +124,8 @@ public class FoilMakerController implements ActionListener {
                         "Error: Register", JOptionPane.ERROR_MESSAGE);
             }
         }
-
+        
+        //If Start New Game Button Pushed
         if (buttonText.equals("Start a New Game")) {
             response = startANewGame(model.getUserToken());
             System.out.println(response);
@@ -133,8 +134,18 @@ public class FoilMakerController implements ActionListener {
                 view.goToStartNewGamePanel();
                 model.setGameToken(response.substring(33));
                 view.createdCode.replaceRange(model.getGameToken(), 0, 2);
-            } 
+            } else if ( response.contains("USERNOTLOGGEDIN")) {
+                JOptionPane.showMessageDialog(null, "Error: User Not Logged In",
+                        "Error: User Not Logged In", JOptionPane.ERROR_MESSAGE);
+            } else if ( response.contains("FAILURE")) {
+                JOptionPane.showMessageDialog(null, "Error: User already playing or server failed to create a " +
+                                "new game session due to an internal error.",
+                                "Error: Failure", JOptionPane.ERROR_MESSAGE);
+            }
         }
+        
+        //If JoinGame Button is pushed
+       
     }
 
 
