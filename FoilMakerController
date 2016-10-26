@@ -39,12 +39,12 @@ public class FoilMakerController implements ActionListener {
 
     public String sendSuggestion(String userToken,String gameToken,String suggestion){
         return getResponse("PLAYERSUGGESTION--" + userToken + "--" +
-            gameToken + "--" + suggestion);
+                gameToken + "--" + suggestion);
     }
 
     public String sendChoice(String userToken,String gameToken,String choice){
         return getResponse("PLAYERCHOICE--" + userToken + "--" +
-            gameToken + "--" + choice);
+                gameToken + "--" + choice);
     }
 
     public String logOut(){
@@ -126,8 +126,14 @@ public class FoilMakerController implements ActionListener {
         }
 
         if (buttonText.equals("Start a New Game")) {
-            System.out.println(startANewGame(model.getUserToken()));
             response = startANewGame(model.getUserToken());
+            System.out.println(response);
+
+            if ( response.contains("SUCCESS")) {
+                view.goToStartNewGamePanel();
+                model.setGameToken(response.substring(33));
+                view.createdCode.replaceRange(model.getGameToken(), 0, 2);
+            } 
         }
     }
 
