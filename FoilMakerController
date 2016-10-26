@@ -11,9 +11,9 @@ import java.net.Socket;
  * Created by Nicholas on 10/24/2016.
  */
 public class FoilMakerController implements ActionListener {
-    private static FoilMakerController controller;
-    private static FoilMakerView view;
-    private static FoilMakerModel model;
+    public FoilMakerController controller;
+    public FoilMakerView view;
+    public FoilMakerModel model;
 
     public String logIn(String username, String password) {
         return getResponse("LOGIN--" + username + "--" + password);
@@ -76,9 +76,9 @@ public class FoilMakerController implements ActionListener {
     }
 
     public static void main(String[] args) {
-        controller = new FoilMakerController();
-        model = new FoilMakerModel();
-        view = new FoilMakerView(controller);
+        FoilMakerController controller = new FoilMakerController();
+        controller.model = new FoilMakerModel();
+        controller.view = new FoilMakerView(controller);
     }
 
     public void handleButtonAction(ActionEvent e) {
@@ -110,7 +110,7 @@ public class FoilMakerController implements ActionListener {
             }
         }
 
-        //If Register BUtton Pushed
+        //If Register Button Pushed
         if (buttonText.equals("Register")) {
             response = register(view.usernameTextField.getText(), view.passwordTextField.getText());
             System.out.println(response);
