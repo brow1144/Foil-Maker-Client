@@ -45,6 +45,7 @@ public class FoilMakerView extends JFrame  {
     protected  JTextArea output;
 
     protected  JTextField userSuggestion;
+    protected JTextField codeTextField;
 
     protected  JScrollPane participantsScrollPane;
 
@@ -209,10 +210,12 @@ public class FoilMakerView extends JFrame  {
         participantsScrollPane.setBackground(Color.black);
         participantsPanel.add(participantsScrollPane);
 
+        /*
         showMessage("Alice");
         showMessage("Bob");
         showMessage("Kyle");
         showMessage("Angela");
+        */
 
 
         JPanel startGameButtonPanel = new JPanel();
@@ -247,6 +250,8 @@ public class FoilMakerView extends JFrame  {
     }
 
     public void goToJoinAGame() {
+        //agsadgasdga
+        topPanel.setVisible(false);
 
         topHalf.removeAll();
         bottomMessagePanel.removeAll();
@@ -257,36 +262,52 @@ public class FoilMakerView extends JFrame  {
         topPanel.removeAll();
         topPanel.add(username);
 
+        topHalf.setLayout(new GridLayout(0, 1));
+
 
 
         JPanel labelForCodePanel = new JPanel();
         labelForCodePanel.setLayout(new BoxLayout(labelForCodePanel, BoxLayout.Y_AXIS));
-        labelForCodePanel.setBorder(BorderFactory.createTitledBorder("Label for Code"));
+        //labelForCodePanel.setBorder(BorderFactory.createTitledBorder("Label for Code"));
 
         JPanel codeTextAreaPanel = new JPanel();
         codeTextAreaPanel.setLayout(new FlowLayout());
-        codeTextAreaPanel.setBorder(BorderFactory.createTitledBorder("Code Text Area"));
+        //codeTextAreaPanel.setBorder(BorderFactory.createTitledBorder("Code Text Area"));
 
         labelForCodePanel.add(codeTextAreaPanel);
 
+        codeTextField = new JTextField();
+        codeTextField.setColumns(3);
+
+        JPanel CodeTextAreaPanelBottom = new JPanel();
+        //CodeTextAreaPanelBottom.setLayout(new FlowLayout());
+        //CodeTextAreaPanelBottom.setBorder(BorderFactory.createTitledBorder("New Panel"));
+
+        CodeTextAreaPanelBottom.add(codeTextField);
+
+
         JPanel joinGameButtonPanel = new JPanel();
         joinGameButtonPanel.setLayout(new FlowLayout());
-        joinGameButtonPanel.setBorder(BorderFactory.createTitledBorder("Join Game Button Panel"));
+        //joinGameButtonPanel.setBorder(BorderFactory.createTitledBorder("Join Game Button Panel"));
 
         JLabel labelForCode = new JLabel("Enter the Game Key to Join");
-        JTextField codeTextField = new JTextField();
+        //JTextField codeTextField = new JTextField();
 
 
-        labelForCodePanel.add(codeTextField);
+        labelForCodePanel.add(CodeTextAreaPanelBottom);
         codeTextAreaPanel.add(labelForCode);
         joinGameButton = addButtonToPane("Join Game", joinGameButtonPanel);
 
         topHalf.add(labelForCodePanel);
         topHalf.add(joinGameButtonPanel);
 
+        topPanel.setVisible(true);
+
     }
 
     public void goToWaitingForLeader() {
+
+        topPanel.setVisible(false);
 
         topHalf.removeAll();
         bottomMessagePanel.removeAll();
@@ -310,6 +331,7 @@ public class FoilMakerView extends JFrame  {
         bottomMessage = new JLabel("Joined Game: Waiting For Leader");
         bottomMessagePanel.add(bottomMessage);
 
+        topPanel.setVisible(true);
     }
 
     public void goToLaunchGame() {
