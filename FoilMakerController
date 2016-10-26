@@ -98,7 +98,8 @@ public class FoilMakerController implements ActionListener {
             response = Register(view.usernameTextField.getText(), view.passwordTextField.getText());
             System.out.println(response);
             if (response.contains("SUCCESS")) {
-                view.goToNewGamePanel();
+                JOptionPane.showMessageDialog(null, "New User Registered.",
+                        "User Registration", JOptionPane.INFORMATION_MESSAGE);
             } else if (response.contains("INVALIDUSERNAME") || response.contains("INVALIDMESSAGEFORMAT")) {
                 JOptionPane.showMessageDialog(null, "Error: Must enter a username and password.",
                         "Error: Register", JOptionPane.ERROR_MESSAGE);
