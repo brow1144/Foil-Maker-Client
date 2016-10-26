@@ -52,6 +52,8 @@ public class FoilMakerView extends JFrame  {
     protected  String currentUser;
     protected  String password;
 
+    protected String gameCode;
+
 
     public FoilMakerView(FoilMakerController controller) {
 
@@ -148,8 +150,6 @@ public class FoilMakerView extends JFrame  {
     }
 
     public void goToNewGamePanel() {
-        //remove pane from login panel
-        //add the new things
 
         topPanel.setVisible(false);
 
@@ -177,6 +177,9 @@ public class FoilMakerView extends JFrame  {
     }
 
     public void goToStartNewGamePanel() {
+        //adfasdfasdf
+        topHalf.setVisible(false);
+        topPanel.setVisible(false);
 
         topHalf.removeAll();
         topHalf.setLayout(new GridLayout(4, 0));
@@ -216,14 +219,17 @@ public class FoilMakerView extends JFrame  {
         startGameButtonPanel.setLayout(new FlowLayout());
 
 
-        createdCodeLabel = new JLabel("            Others Should Use This Code to Join Your Game");
+        createdCodeLabel = new JLabel("Others Should Use This Code to Join Your Game");
         JLabel empty = new JLabel("   ");
         createdCodeLabelPanel.add(empty);
         createdCodeLabelPanel.add(empty);
         createdCodeLabelPanel.add(createdCodeLabel);
 
-        createdCode = new JTextArea("GKW");
+
+        createdCode = new JTextArea("xx");
         createdCodeTextAreaPanel.add(createdCode);
+
+
 
 
         startNewGameButton = addButtonToPane("Start Game", startGameButtonPanel);
@@ -233,6 +239,10 @@ public class FoilMakerView extends JFrame  {
         topHalf.add(createdCodeTextAreaPanel);
         topHalf.add(participantsPanel);
         topHalf.add(startGameButtonPanel);
+
+        //asfasdfasdfsadf
+        topHalf.setVisible(true);
+        topPanel.setVisible(true);
 
     }
 
@@ -369,7 +379,7 @@ public class FoilMakerView extends JFrame  {
     }
 
     public static void main(String[] args) {
-        
+
         FoilMakerView x = new FoilMakerView(new FoilMakerController());
     }
 
