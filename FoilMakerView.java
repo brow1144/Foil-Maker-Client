@@ -151,17 +151,27 @@ public class FoilMakerView extends JFrame  {
         //remove pane from login panel
         //add the new things
 
-        topHalf.removeAll();
+        topPanel.setVisible(false);
+
         topPanel.removeAll();
+
+        currentUser = usernameTextField.getText();
+
         username = new JLabel(currentUser);
         topPanel.add(username);
+        topPanel.setVisible(true);
+
+
+        topHalf.setVisible(false);
+        topHalf.removeAll();
+
 
 
 
         startANewGameButton = addButtonToPane("Start a New Game", topHalf);
         joinAGameButton = addButtonToPane("Join a Game", topHalf);
 
-        topFrame.setVisible(true);
+        topHalf.setVisible(true);
 
 
     }
