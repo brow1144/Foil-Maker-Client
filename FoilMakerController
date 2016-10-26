@@ -14,6 +14,7 @@ public class FoilMakerController implements ActionListener {
     public FoilMakerController controller;
     public FoilMakerView view;
     public FoilMakerModel model;
+    public Socket socket;
 
     public String logIn(String username, String password) {
         return getResponse("LOGIN--" + username + "--" + password);
@@ -51,12 +52,7 @@ public class FoilMakerController implements ActionListener {
     }
 
     public String getResponse(String messageToServer) {
-        String serverIP = "localhost";
-        int serverPort = 7000;
         try {
-            // Connect to server
-            Socket socket = new Socket(serverIP, serverPort);
-
             // Create data writer
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
@@ -65,19 +61,22 @@ public class FoilMakerController implements ActionListener {
             BufferedReader in = new BufferedReader(isr);
             // Send message to server
             out.println(messageToServer);
-
             // Read server response
-            String serverMessage = in.readLine();
-            return serverMessage;
+            return in.readLine();
         } catch (IOException e) {
             e.printStackTrace();
-            return null;
+            return "Error";
         }
     }
 
     public static void main(String[] args) {
         FoilMakerController controller = new FoilMakerController();
         controller.model = new FoilMakerModel();
+        try{
+            controller.socket = new Socket("localhost", 8000);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
         controller.view = new FoilMakerView(controller);
     }
 
@@ -127,7 +126,8 @@ public class FoilMakerController implements ActionListener {
         }
 
         if (buttonText.equals("Start a New Game")) {
-            // response = StartANewGame()
+            System.out.println(startANewGame(model.getUserToken()));
+            response = startANewGame(model.getUserToken());
         }
     }
 
