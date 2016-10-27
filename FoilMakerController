@@ -11,61 +11,73 @@ import java.net.Socket;
  * Created by Nicholas on 10/24/2016.
  */
 public class FoilMakerController implements ActionListener {
-    protected FoilMakerController controller;
     protected FoilMakerView view;
     protected FoilMakerModel model;
     protected Socket socket;
 
-    public String logIn(String username, String password) {
-        return getResponse("LOGIN--" + username + "--" + password);
+    public void logIn(String username, String password) {
+        sendResponse("LOGIN--" + username + "--" + password);
     }
 
-    public String register(String username, String password) {
-        return getResponse("CREATENEWUSER--" + username + "--" + password);
+    public void register(String username, String password) {
+        sendResponse("CREATENEWUSER--" + username + "--" + password);
     }
 
-    public String startANewGame(String userToken) {
-        return getResponse("STARTNEWGAME--" + userToken);
+    public void startANewGame(String userToken) {
+        sendResponse("STARTNEWGAME--" + userToken);
     }
 
-    public String joinGame(String userToken, String gameToken) {
-        return getResponse("JOINGAME--" + userToken + "--" + gameToken);
+    public void joinGame(String userToken, String gameToken) {
+        sendResponse("JOINGAME--" + userToken + "--" + gameToken);
     }
 
-    public String launchGame(String userToken, String gameToken) {
-        return getResponse("ALLPARTICIPANTSHAVEJOINED--" + userToken +
+    public void launchGame(String userToken, String gameToken) {
+        sendResponse("ALLPARTICIPANTSHAVEJOINED--" + userToken +
                 "--" + gameToken);
     }
 
-    public String sendSuggestion(String userToken, String gameToken, String suggestion) {
-        return getResponse("PLAYERSUGGESTION--" + userToken + "--" +
+    public void sendSuggestion(String userToken, String gameToken, String suggestion) {
+        sendResponse("PLAYERSUGGESTION--" + userToken + "--" +
                 gameToken + "--" + suggestion);
     }
 
-    public String sendChoice(String userToken, String gameToken, String choice) {
-        return getResponse("PLAYERCHOICE--" + userToken + "--" +
+    public void sendChoice(String userToken, String gameToken, String choice) {
+        sendResponse("PLAYERCHOICE--" + userToken + "--" +
                 gameToken + "--" + choice);
     }
 
-    public String logOut() {
-        return getResponse("LOGOUT--");
+    public void logOut() {
+        sendResponse("LOGOUT--");
     }
 
-    public String getResponse(String messageToServer) {
+    public void sendResponse(String messageToServer) {
         try {
-            // Create data writer
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
-            // Create data reader
             InputStreamReader isr = new InputStreamReader(socket.getInputStream());
             BufferedReader in = new BufferedReader(isr);
-            // Send message to server
+
             out.println(messageToServer);
-            // Read server response
-            return in.readLine();
+
         } catch (IOException e) {
             e.printStackTrace();
-            return "Error";
+        }
+    }
+
+    public void listen(){
+        try {
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            InputStreamReader isr = new InputStreamReader(socket.getInputStream());
+            BufferedReader in = new BufferedReader(isr);
+            while(true) {
+                String response = in.readLine();
+                System.out.print(response);
+                if(response.contains("RESPONSE")){
+                    checkOutput(response);
+                }
+            }
+        } catch (IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -73,23 +85,16 @@ public class FoilMakerController implements ActionListener {
         FoilMakerController controller = new FoilMakerController();
         controller.model = new FoilMakerModel();
         try {
-            controller.socket = new Socket("localhost", 5000);
+            controller.socket = new Socket("localhost", 8000);
         } catch (IOException e) {
             e.printStackTrace();
         }
         controller.view = new FoilMakerView(controller);
+        controller.listen();
     }
 
-    public void handleButtonAction(ActionEvent e) {
-        JButton button = (JButton) e.getSource();
-        String buttonText = button.getText();
-        String response;
-
-        //If Login Button Pushed
-        if (buttonText.equals("Login")) {
-            response = logIn(view.usernameTextField.getText(), view.passwordTextField.getText());
-            System.out.println(response);
-
+    public void checkOutput(String response){
+        if(response.contains("LOGIN")) {
             if (response.contains("SUCCESS")) {
                 view.goToNewGamePanel();
                 model.setUsername(view.usernameTextField.getText());
@@ -109,10 +114,7 @@ public class FoilMakerController implements ActionListener {
             }
         }
 
-        //If Register Button Pushed
-        if (buttonText.equals("Register")) {
-            response = register(view.usernameTextField.getText(), view.passwordTextField.getText());
-            System.out.println(response);
+        if(response.contains("CREATENEWUSER")){
             if (response.contains("SUCCESS")) {
                 JOptionPane.showMessageDialog(null, "New User Registered.",
                         "User Registration", JOptionPane.INFORMATION_MESSAGE);
@@ -125,11 +127,7 @@ public class FoilMakerController implements ActionListener {
             }
         }
 
-        //If Start New Game Button Pushed
-        if (buttonText.equals("Start a New Game")) {
-            response = startANewGame(model.getUserToken());
-            System.out.println(response);
-
+        if(response.contains("STARTNEWGAME")){
             if (response.contains("SUCCESS")) {
                 view.goToStartNewGamePanel();
                 model.setGameToken(response.substring(33));
@@ -144,17 +142,7 @@ public class FoilMakerController implements ActionListener {
             }
         }
 
-        //If JoinGame Button is pushed
-        if (buttonText.equals("Join a Game")) {
-            view.goToJoinAGame();
-        }
-
-        if ( buttonText.equals("Join Game")) {
-            //response = joinGame(model.getUserToken(), model.getGameToken());
-            response = joinGame(model.getUserToken(), view.codeTextField.getText());
-            System.out.println(response);
-
-
+        if(response.contains("JOINGAME")){
             //FIX FIX FIX FIX
             if ( response.contains("SUCCESS")) {
                 view.usernameForController = model.getUsername();
@@ -171,6 +159,39 @@ public class FoilMakerController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: User is Already In This Game",
                         "Error: User Already Joined", JOptionPane.ERROR_MESSAGE);
             }
+        }
+
+        if(response.contains("NEWPARTICIPANT")){
+            //TODO Code for new participants in game
+        }
+    }
+
+    public void handleButtonAction(ActionEvent e) {
+        JButton button = (JButton) e.getSource();
+        String buttonText = button.getText();
+
+        //If Login Button Pushed
+        if (buttonText.equals("Login")) {
+            logIn(view.usernameTextField.getText(), view.passwordTextField.getText());
+        }
+
+        //If Register Button Pushed
+        if (buttonText.equals("Register")) {
+            register(view.usernameTextField.getText(), view.passwordTextField.getText());
+        }
+
+        //If Start New Game Button Pushed
+        if (buttonText.equals("Start a New Game")) {
+            startANewGame(model.getUserToken());
+        }
+
+        //If JoinGame Button is pushed
+        if (buttonText.equals("Join a Game")) {
+            view.goToJoinAGame();
+        }
+
+        if ( buttonText.equals("Join Game")) {
+            joinGame(model.getUserToken(), view.codeTextField.getText());
         }
     }
 
