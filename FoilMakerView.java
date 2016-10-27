@@ -217,7 +217,6 @@ public class FoilMakerView extends JFrame  {
         participantsPanel.add(participantsScrollPane);
 
 
-        //TO DO FIX THIS BEING NULL
         usernameForController = "";
         showMessage(usernameForController);
 
@@ -375,10 +374,10 @@ public class FoilMakerView extends JFrame  {
         showMessage(question);
 
         JPanel yourSuggestion = new JPanel();
-        yourSuggestion.setLayout(new GridLayout(1, 0));
+        yourSuggestion.setLayout(new FlowLayout());
         yourSuggestion.setBorder(BorderFactory.createTitledBorder("Your Suggestion"));
 
-        userSuggestion = new JTextField();
+        userSuggestion = new JTextField(20);
 
         yourSuggestion.add(userSuggestion);
 
