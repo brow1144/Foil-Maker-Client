@@ -44,6 +44,7 @@ public class FoilMakerView extends JFrame  {
     protected  JButton joinGameButton;
     protected  JButton submitSuggestionButton;
     protected  JButton nextRound;
+    protected  JButton submitChoiceButton;
 
     protected JRadioButton[] choices;
 
@@ -435,6 +436,12 @@ public class FoilMakerView extends JFrame  {
             mainPanel.add(choices[i]);
 
         }
+
+        submitChoiceButton = new JButton("Submit Option");
+
+        topHalf.add(submitChoiceButton);
+        
+
         topHalf.add(mainPanel);
 
         topFrame.setVisible(true);
