@@ -2,10 +2,7 @@
  * Created by Nicholas on 10/24/2016.
  */
 public class FoilMakerModel {
-    private String username, userToken, gameToken;
-
-    protected FoilMakerView view;
-    protected FoilMakerController controller;
+    private String username, userToken, gameToken, score, question, correctAnswer;
 
     public String getUsername() {
         return username;
@@ -30,4 +27,32 @@ public class FoilMakerModel {
     public String getGameToken() {
         return gameToken;
     }
+
+    public void setScore() {
+        this.score = score;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public String getCorrectAnswer() {
+        return correctAnswer;
+    }
+
+
+
+
 }
