@@ -51,7 +51,7 @@ public class FoilMakerView extends JFrame  {
     protected  JTextArea output;
 
     protected  JTextField userSuggestion;
-    protected JTextField codeTextField;
+    protected  JTextField codeTextField;
 
     protected  JScrollPane participantsScrollPane;
 
@@ -341,9 +341,9 @@ public class FoilMakerView extends JFrame  {
         topPanel.setVisible(true);
     }
 
-    public void goToLaunchGame() {
+    public void goToLaunchGame(String question) {
 
-        topPanel.setVisible(false);
+        topFrame.setVisible(false);
 
         topHalf.removeAll();
 
@@ -358,20 +358,14 @@ public class FoilMakerView extends JFrame  {
 
         bottomMessagePanel.add(bottomMessage);
 
-        JPanel everythingButButton = new JPanel();
-        everythingButButton.setLayout(new BoxLayout(everythingButButton, BoxLayout.Y_AXIS));
-        //everythingButButton.setBorder(BorderFactory.createTitledBorder("Everything But Button"));
-
         JPanel displayPanel = new JPanel();
         displayPanel.setLayout(new BoxLayout(displayPanel, BoxLayout.Y_AXIS));
-        //displayPanel.setBorder(BorderFactory.createTitledBorder("Display"));
+
         JLabel whatIsTheWordFor = new JLabel("What is the Word For ↓");
         displayPanel.add(whatIsTheWordFor);
 
-
         JPanel suggestedPhraseTextArea = new JPanel();
-        suggestedPhraseTextArea.setLayout(new FlowLayout());
-        //suggestedPhraseTextArea.setBorder(BorderFactory.createTitledBorder("Suggested Phrase Text Area"));
+        suggestedPhraseTextArea.setLayout(new GridLayout());
 
 
         output = new JTextArea(12, 32);
@@ -380,11 +374,7 @@ public class FoilMakerView extends JFrame  {
         scrollPane.setBackground(Color.black);
         suggestedPhraseTextArea.add(scrollPane);
 
-        showMessage("A Group of Zebras");
-
-        displayPanel.add(suggestedPhraseTextArea);
-
-
+        showMessage(question);
 
         JPanel yourSuggestion = new JPanel();
         yourSuggestion.setLayout(new GridLayout(1, 0));
@@ -394,14 +384,22 @@ public class FoilMakerView extends JFrame  {
 
         yourSuggestion.add(userSuggestion);
 
-        everythingButButton.add(displayPanel);
-        everythingButButton.add(yourSuggestion);
+        topHalf.add(displayPanel);
 
-        topHalf.add(everythingButButton);
+        displayPanel.add(suggestedPhraseTextArea);
+        
 
-        submitSuggestionButton = addButtonToPane("Submit Suggestion", topHalf);
+        topHalf.add(yourSuggestion);
 
-        topPanel.setVisible(true);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+
+
+        submitSuggestionButton = addButtonToPane("Submit Suggestion", buttonPanel);
+
+        topHalf.add(buttonPanel);
+
+        topFrame.setVisible(true);
 
 
     }
