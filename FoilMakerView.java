@@ -1,5 +1,7 @@
 
 
+import javafx.beans.property.ReadOnlyFloatWrapper;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -17,6 +19,7 @@ import java.awt.*;
 public class FoilMakerView extends JFrame  {
 
     protected FoilMakerController controller;
+    protected FoilMakerModel model;
 
     protected  JFrame topFrame;
 
@@ -40,6 +43,9 @@ public class FoilMakerView extends JFrame  {
     protected  JButton joinAGameButton;
     protected  JButton joinGameButton;
     protected  JButton submitSuggestionButton;
+    protected  JButton nextRound;
+
+    protected JRadioButton[] choices;
 
     protected  JTextArea createdCode;
     protected  JTextArea output;
@@ -211,6 +217,8 @@ public class FoilMakerView extends JFrame  {
         participantsPanel.add(participantsScrollPane);
 
 
+        //TO DO FIX THIS BEING NULL
+        usernameForController = "";
         showMessage(usernameForController);
 
 
@@ -312,10 +320,11 @@ public class FoilMakerView extends JFrame  {
         bottomMessage = new JLabel("Welcome!");
         bottomMessagePanel.add(bottomMessage);
 
+        currentUser = usernameTextField.getText();
         topPanel.removeAll();
         username = new JLabel(currentUser);
         topPanel.add(username);
-
+        topPanel.setVisible(true);
 
 
 
@@ -334,12 +343,15 @@ public class FoilMakerView extends JFrame  {
 
     public void goToLaunchGame() {
 
+        topPanel.setVisible(false);
+
         topHalf.removeAll();
 
+        currentUser = usernameTextField.getText();
         topPanel.removeAll();
         username = new JLabel(currentUser);
         topPanel.add(username);
-
+        topPanel.setVisible(true);
 
         bottomMessage = new JLabel("Enter Your Suggestion");
         bottomMessagePanel.removeAll();
@@ -389,9 +401,119 @@ public class FoilMakerView extends JFrame  {
 
         submitSuggestionButton = addButtonToPane("Submit Suggestion", topHalf);
 
+        topPanel.setVisible(true);
+
 
     }
 
+    public void goToOptionPanel() {
+        topFrame.setVisible(false);
+
+        topPanel.setVisible(false);
+
+        topHalf.removeAll();
+
+        currentUser = usernameTextField.getText();
+
+        topPanel.removeAll();
+
+        username = new JLabel(currentUser);
+        topPanel.add(username);
+        topPanel.setVisible(true);
+
+
+        bottomMessage = new JLabel("Pick Your Suggestion");
+        bottomMessagePanel.removeAll();
+
+        bottomMessagePanel.add(bottomMessage);
+
+        JPanel mainPanel = new JPanel(new FlowLayout());
+        mainPanel.setBorder(BorderFactory.createTitledBorder("Main Panel"));
+
+
+
+
+//NOT WORKING
+
+        //NOT WORKIN
+
+            //FIX FIX FIX
+
+                //FIX FIX FIX
+
+        choices = new JRadioButton[model.CHOICES.length];
+        ButtonGroup group = new ButtonGroup();
+        for (int i = 0; i < model.CHOICES.length; i++) {
+            choices[i] = new JRadioButton(model.CHOICES[i]);
+            group.add(choices[i]);
+            mainPanel.add(choices[i]);
+
+
+            topHalf.add(mainPanel);
+
+            topFrame.setVisible(true);
+        }
+    }
+
+    public void goToResultPanel() {
+
+        topPanel.setVisible(false);
+
+        topHalf.removeAll();
+
+
+        currentUser = usernameTextField.getText();
+
+        topPanel.removeAll();
+
+        username = new JLabel(currentUser);
+        topPanel.add(username);
+        topPanel.setVisible(true);
+
+
+        bottomMessage = new JLabel("Click <Next Round> When Ready");
+        bottomMessagePanel.removeAll();
+
+        bottomMessagePanel.add(bottomMessage);
+
+
+        JPanel mainPanel = new JPanel(new GridLayout(3 , 0));
+        //mainPanel.setBorder(BorderFactory.createTitledBorder("Main Panel"));
+
+        JPanel roundResult = new JPanel(new FlowLayout());
+        roundResult.setBorder(BorderFactory.createTitledBorder("Round Result"));
+        output = new JTextArea(6, 32);
+        output.setBackground(Color.CYAN);
+        JScrollPane scrollPane = new JScrollPane(output);
+        scrollPane.setBackground(Color.black);
+        roundResult.add(scrollPane);
+        showMessage("You were Fooled by Someone");
+
+        JPanel overAllResults = new JPanel(new FlowLayout());
+        overAllResults.setBorder(BorderFactory.createTitledBorder("Overall Results"));
+        output = new JTextArea(8, 32);
+        output.setBackground(Color.GREEN);
+        JScrollPane scrollPane2 = new JScrollPane(output);
+        scrollPane.setBackground(Color.black);
+        overAllResults.add(scrollPane2);
+
+        showMessage("Kyle => Score: 1");
+
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
+        nextRound = new JButton("Next Round");
+        buttonPanel.add(nextRound);
+
+        mainPanel.add(roundResult);
+        mainPanel.add(overAllResults);
+        mainPanel.add(buttonPanel);
+
+        topHalf.add(mainPanel);
+
+        topPanel.setVisible(true);
+
+
+    }
 
     public void showMessage(String msg) {
 
