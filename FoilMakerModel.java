@@ -1,15 +1,17 @@
+import java.util.ArrayList;
+
 /**
  * Created by Nicholas on 10/24/2016.
  */
 public class FoilMakerModel {
     private String username, userToken, gameToken, score, question, correctAnswer, suggestion, choice;
-    private String[] choices;
+    private ArrayList<String> choices = new ArrayList<>();
 
-    public String[] getChoices() {
+    public ArrayList<String> getChoices() {
         return choices;
     }
 
-    public void setChoices(String[] choices) {
+    public void setChoices(ArrayList<String> choices) {
         this.choices = choices;
     }
 
