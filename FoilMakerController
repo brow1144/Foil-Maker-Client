@@ -158,7 +158,14 @@ public class FoilMakerController implements ActionListener {
         }
 
         if(response.contains("NEWPARTICIPANT")){
-            //TODO Code for new participants in game
+            
+            String namePlusScore = response.substring(16);
+            int firstDash = namePlusScore.indexOf('-');
+            int x = firstDash + 16;
+            response.substring(x);
+            String y = response.substring(16, x);
+
+            view.showMessage(y);
         }
 
         if(response.contains("ALLPARTICIPANTSHAVEJOINED")){
