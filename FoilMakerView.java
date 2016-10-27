@@ -437,10 +437,10 @@ public class FoilMakerView extends JFrame  {
 
         //NOT WORKIN
 
-            //FIX FIX FIX
+        //FIX FIX FIX
 
-                //FIX FIX FIX
-
+        //FIX FIX FIX
+/*
         choices = new JRadioButton[model.CHOICES.length];
         ButtonGroup group = new ButtonGroup();
         for (int i = 0; i < model.CHOICES.length; i++) {
@@ -452,7 +452,8 @@ public class FoilMakerView extends JFrame  {
             topHalf.add(mainPanel);
 
             topFrame.setVisible(true);
-        }
+        }*/
+
     }
 
     public void goToResultPanel() {
