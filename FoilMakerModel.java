@@ -3,6 +3,15 @@
  */
 public class FoilMakerModel {
     private String username, userToken, gameToken, score, question, correctAnswer, suggestion;
+    private String[] choices;
+
+    public String[] getChoices() {
+        return choices;
+    }
+
+    public void setChoices(String[] choices) {
+        this.choices = choices;
+    }
 
     public String getUsername() {
         return username;
