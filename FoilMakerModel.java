@@ -2,7 +2,7 @@
  * Created by Nicholas on 10/24/2016.
  */
 public class FoilMakerModel {
-    private String username, userToken, gameToken, score, question, correctAnswer, suggestion;
+    private String username, userToken, gameToken, score, question, correctAnswer, suggestion, choice;
     private String[] choices;
 
     public String[] getChoices() {
@@ -67,5 +67,17 @@ public class FoilMakerModel {
 
     public void setSuggestion(String suggestion) {
         this.suggestion = suggestion;
+    }
+
+    public void setChoice(String choice) {
+
+        this.choice = choice;
+
+    }
+
+    public String getChoice() {
+
+        return choice;
+
     }
 }
