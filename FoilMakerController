@@ -179,7 +179,13 @@ public class FoilMakerController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: User already playing game",
                         "Error: User not Game Leader", JOptionPane.ERROR_MESSAGE);
             } else {
-                view.goToLaunchGame();
+                String question,answer;
+                response = response.substring(13);
+                question = response.substring(0,response.indexOf('-'));
+                answer = response.substring(response.indexOf("--") + 2);
+                model.setQuestion(question);
+                model.setCorrectAnswer(answer);
+                view.goToLaunchGame(question);
             }
         }
     }
