@@ -387,7 +387,7 @@ public class FoilMakerView extends JFrame  {
         topHalf.add(displayPanel);
 
         displayPanel.add(suggestedPhraseTextArea);
-        
+
 
         topHalf.add(yourSuggestion);
 
@@ -438,19 +438,19 @@ public class FoilMakerView extends JFrame  {
         //FIX FIX FIX
 
         //FIX FIX FIX
-/*
-        choices = new JRadioButton[model.CHOICES.length];
+
+        choices = new JRadioButton[model.getChoices().length];
         ButtonGroup group = new ButtonGroup();
-        for (int i = 0; i < model.CHOICES.length; i++) {
-            choices[i] = new JRadioButton(model.CHOICES[i]);
+        for (int i = 0; i < model.getChoices().length; i++) {
+            choices[i] = new JRadioButton(model.getChoices()[i]);
             group.add(choices[i]);
             mainPanel.add(choices[i]);
 
-
+        }
             topHalf.add(mainPanel);
 
             topFrame.setVisible(true);
-        }*/
+        
 
     }
 
