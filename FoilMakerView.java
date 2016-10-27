@@ -316,9 +316,12 @@ public class FoilMakerView extends JFrame  {
         topPanel.setVisible(false);
 
         topHalf.removeAll();
+
+        bottomMessagePanel.setVisible(false);
         bottomMessagePanel.removeAll();
-        bottomMessage = new JLabel("Welcome!");
+        bottomMessage = new JLabel("Joined Game. Waiting For Leader");
         bottomMessagePanel.add(bottomMessage);
+        bottomMessagePanel.setVisible(true);
 
         currentUser = usernameTextField.getText();
         topPanel.removeAll();
@@ -328,15 +331,10 @@ public class FoilMakerView extends JFrame  {
 
 
 
-        JLabel waitingForLeaderLabel = new JLabel("Waiting for Leader", SwingConstants.CENTER);
+        JLabel waitingForLeaderLabel = new JLabel("Waiting for Leader ...", SwingConstants.CENTER);
 
 
         topHalf.add(waitingForLeaderLabel);
-
-
-        bottomMessagePanel.removeAll();
-        bottomMessage = new JLabel("Joined Game: Waiting For Leader");
-        bottomMessagePanel.add(bottomMessage);
 
         topPanel.setVisible(true);
     }
@@ -430,15 +428,6 @@ public class FoilMakerView extends JFrame  {
 
 
 
-
-//NOT WORKING
-
-        //NOT WORKIN
-
-        //FIX FIX FIX
-
-        //FIX FIX FIX
-
         choices = new JRadioButton[model.getChoices().length];
         ButtonGroup group = new ButtonGroup();
         for (int i = 0; i < model.getChoices().length; i++) {
@@ -447,10 +436,10 @@ public class FoilMakerView extends JFrame  {
             mainPanel.add(choices[i]);
 
         }
-            topHalf.add(mainPanel);
+        topHalf.add(mainPanel);
 
-            topFrame.setVisible(true);
-        
+        topFrame.setVisible(true);
+
 
     }
 
