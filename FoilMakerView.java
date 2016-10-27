@@ -427,10 +427,10 @@ public class FoilMakerView extends JFrame  {
 
 
 
-        choices = new JRadioButton[model.getChoices().length];
+        choices = new JRadioButton[model.getChoices().size()];
         ButtonGroup group = new ButtonGroup();
-        for (int i = 0; i < model.getChoices().length; i++) {
-            choices[i] = new JRadioButton(model.getChoices()[i]);
+        for (int i = 0; i < model.getChoices().size(); i++) {
+            choices[i] = new JRadioButton(model.getChoices().get(i));
             group.add(choices[i]);
             mainPanel.add(choices[i]);
 
