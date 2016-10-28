@@ -11,8 +11,8 @@ public class FoilMakerModel {
         return choices;
     }
 
-    public void setChoices(ArrayList<String> choices) {
-        this.choices = choices;
+    public void addChoices(String s) {
+        choices.add(s);
     }
 
     public String getUsername() {
