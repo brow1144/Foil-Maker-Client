@@ -138,11 +138,7 @@ public class FoilMakerController implements ActionListener {
             }
 
             if (response.contains("JOINGAME")) {
-                //FIX FIX FIX FIX
                 if (response.contains("SUCCESS")) {
-                    view.usernameForController = model.getUsername();
-                    //view.showMessage(model.getUsername());
-                    //System.out.println(model.getUsername() + " joined");
                     view.goToWaitingForLeader();
                 } else if (response.contains("USERNOTLOGGEDIN")) {
                     JOptionPane.showMessageDialog(null, "Error: User Not Logged In",
@@ -184,6 +180,22 @@ public class FoilMakerController implements ActionListener {
                             "Error: Invalid Message Format", JOptionPane.ERROR_MESSAGE);
                 }
             }
+
+            if (response.contains("PLAYERCHOICE")) {
+                if (response.contains("USERNOTLOGGEDIN"))
+                JOptionPane.showMessageDialog(null, "Error: User Not Logged In",
+                        "Error: Invalid User Token", JOptionPane.ERROR_MESSAGE);
+                } else if (response.contains("INVALIDGAMETOKEN")) {
+                JOptionPane.showMessageDialog(null, "Error: Invalid Game Token",
+                        "Error: Invalid Game Token", JOptionPane.ERROR_MESSAGE);
+                } else if (response.contains("UNEXPECTEDMESSAGETYPE")) {
+                JOptionPane.showMessageDialog(null, "Error: Server couldn't understand the request",
+                        "Error: Unexpected Message Type", JOptionPane.ERROR_MESSAGE);
+                } else if (response.contains("INVALIDMESSAGEFORMAT")) {
+                JOptionPane.showMessageDialog(null, "Error: Server couldn't understand the request",
+                        "Error: Invalid Message Format", JOptionPane.ERROR_MESSAGE);
+            }
+
         } else {
 
             if (response.contains("NEWPARTICIPANT")) {
@@ -194,12 +206,13 @@ public class FoilMakerController implements ActionListener {
                 String y = response.substring(16, x);
 
                 view.showMessage(y);
+
             }
 
             if (response.contains("NEWGAMEWORD")) {
                 String question, answer;
                 response = response.substring(13);
-                question = response.substring(0, response.indexOf('-'));
+                question = response.substring(0, response.indexOf("--"));
                 answer = response.substring(response.indexOf("--") + 2);
                 model.setQuestion(question);
                 model.setCorrectAnswer(answer);
@@ -233,6 +246,7 @@ public class FoilMakerController implements ActionListener {
         }
 
         if (buttonText.equals("Join Game")) {
+            model.setGameToken(view.codeTextField.getText());
             joinGame(model.getUserToken(), view.codeTextField.getText());
         }
 
@@ -243,7 +257,12 @@ public class FoilMakerController implements ActionListener {
 
         //Submitting suggestion
         if(buttonText.equals("Submit Suggestion")){
+            model.setSuggestion(view.userSuggestion.getText());
             sendSuggestion(model.getUserToken(),model.getGameToken(),model.getSuggestion());
+        }
+
+        if (buttonText.equals("Submit Option")) {
+            sendChoice(model.getUserToken(), model.getGameToken(), model.getChoice());
         }
     }
 
