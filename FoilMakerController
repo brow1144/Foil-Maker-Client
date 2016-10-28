@@ -218,6 +218,18 @@ public class FoilMakerController implements ActionListener {
                 model.setCorrectAnswer(answer);
                 view.goToLaunchGame(question);
             }
+            
+            if(response.contains("ROUNDOPTIONS")){
+                response = response.substring(14);
+                System.out.println(response);
+                while(response.contains("--")){
+                    model.addChoices(response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    System.out.println(response);
+                }
+                model.addChoices(response);
+                view.goToOptionPanel();
+            }
         }
     }
 
