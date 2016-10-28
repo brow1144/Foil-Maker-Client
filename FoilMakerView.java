@@ -446,6 +446,7 @@ public class FoilMakerView extends JFrame  {
         }
 
         submitChoiceButton = new JButton("Submit Option");
+        submitChoiceButton.addActionListener(controller);
 
         bottomPanel.add(submitChoiceButton);
 
