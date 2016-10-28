@@ -315,6 +315,8 @@ public class FoilMakerView extends JFrame  {
 
         topPanel.setVisible(false);
 
+        topHalf.setVisible(false);
+
         topHalf.removeAll();
 
         bottomMessagePanel.setVisible(false);
@@ -335,6 +337,8 @@ public class FoilMakerView extends JFrame  {
 
 
         topHalf.add(waitingForLeaderLabel);
+
+        topHalf.setVisible(true);
 
         topPanel.setVisible(true);
     }
@@ -409,6 +413,8 @@ public class FoilMakerView extends JFrame  {
 
         topHalf.removeAll();
 
+        topHalf.setLayout(new GridLayout(2, 0));
+
         currentUser = usernameTextField.getText();
 
         topPanel.removeAll();
@@ -424,14 +430,16 @@ public class FoilMakerView extends JFrame  {
         bottomMessagePanel.add(bottomMessage);
 
         JPanel mainPanel = new JPanel(new FlowLayout());
-        mainPanel.setBorder(BorderFactory.createTitledBorder("Main Panel"));
+
+        JPanel bottomPanel = new JPanel(new FlowLayout());
 
 
 
-        choices = new JRadioButton[model.getChoices().size()];
+
+        choices = new JRadioButton[controller.model.getChoices().size()];
         ButtonGroup group = new ButtonGroup();
-        for (int i = 0; i < model.getChoices().size(); i++) {
-            choices[i] = new JRadioButton(model.getChoices().get(i));
+        for (int i = 0; i < controller.model.getChoices().size(); i++) {
+            choices[i] = new JRadioButton(controller.model.getChoices().get(i));
             group.add(choices[i]);
             mainPanel.add(choices[i]);
 
@@ -439,10 +447,16 @@ public class FoilMakerView extends JFrame  {
 
         submitChoiceButton = new JButton("Submit Option");
 
-        topHalf.add(submitChoiceButton);
-        
+        bottomPanel.add(submitChoiceButton);
+
+
+
 
         topHalf.add(mainPanel);
+
+        topHalf.add(bottomPanel);
+
+
 
         topFrame.setVisible(true);
 
