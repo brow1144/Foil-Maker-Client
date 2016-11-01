@@ -11,6 +11,10 @@ public class FoilMakerModel {
         return choices;
     }
 
+    public void removeChoices(){
+        choices.removeAll(choices);
+    }
+
     public void addChoices(String s) {
         choices.add(s);
     }
