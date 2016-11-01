@@ -50,6 +50,8 @@ public class FoilMakerView extends JFrame  {
 
     protected  JTextArea createdCode;
     protected  JTextArea output;
+    protected  JTextArea roundResultOutput;
+    protected  JTextArea overAllResultsOutput;
 
     protected  JTextField userSuggestion;
     protected  JTextField codeTextField;
@@ -442,6 +444,7 @@ public class FoilMakerView extends JFrame  {
             choices[i] = new JRadioButton(controller.model.getChoices().get(i));
             group.add(choices[i]);
             mainPanel.add(choices[i]);
+            choices[i].addActionListener(controller);
 
         }
 
@@ -466,6 +469,8 @@ public class FoilMakerView extends JFrame  {
 
     public void goToResultPanel() {
 
+        topFrame.setVisible(false);
+
         topPanel.setVisible(false);
 
         topHalf.removeAll();
@@ -477,7 +482,6 @@ public class FoilMakerView extends JFrame  {
 
         username = new JLabel(currentUser);
         topPanel.add(username);
-        topPanel.setVisible(true);
 
 
         bottomMessage = new JLabel("Click <Next Round> When Ready");
@@ -491,22 +495,22 @@ public class FoilMakerView extends JFrame  {
 
         JPanel roundResult = new JPanel(new FlowLayout());
         roundResult.setBorder(BorderFactory.createTitledBorder("Round Result"));
-        output = new JTextArea(6, 32);
-        output.setBackground(Color.CYAN);
-        JScrollPane scrollPane = new JScrollPane(output);
+        roundResultOutput = new JTextArea(6, 32);
+        roundResultOutput.setBackground(Color.CYAN);
+        JScrollPane scrollPane = new JScrollPane(roundResultOutput);
         scrollPane.setBackground(Color.black);
         roundResult.add(scrollPane);
-        showMessage("You were Fooled by Someone");
+        //showMessage("You were Fooled by Someone");
 
         JPanel overAllResults = new JPanel(new FlowLayout());
         overAllResults.setBorder(BorderFactory.createTitledBorder("Overall Results"));
-        output = new JTextArea(8, 32);
-        output.setBackground(Color.GREEN);
-        JScrollPane scrollPane2 = new JScrollPane(output);
-        scrollPane.setBackground(Color.black);
+        overAllResultsOutput = new JTextArea(8, 32);
+        overAllResultsOutput.setBackground(Color.GREEN);
+        JScrollPane scrollPane2 = new JScrollPane(overAllResultsOutput);
+        scrollPane2.setBackground(Color.black);
         overAllResults.add(scrollPane2);
 
-        showMessage("Kyle => Score: 1");
+        //showMessage("Kyle => Score: 1");
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
@@ -520,6 +524,8 @@ public class FoilMakerView extends JFrame  {
         topHalf.add(mainPanel);
 
         topPanel.setVisible(true);
+
+        topFrame.setVisible(true);
 
 
     }
