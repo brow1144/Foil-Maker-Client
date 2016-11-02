@@ -50,8 +50,8 @@ public class FoilMakerView extends JFrame  {
 
     protected  JTextArea createdCode;
     protected  JTextArea output;
-    protected  JTextArea roundResultOutput;
-    protected  JTextArea overAllResultsOutput;
+    protected  JTextArea roundResultOutput = new JTextArea(6,32);
+    protected  JTextArea overAllResultsOutput = new JTextArea(8,32);
 
     protected  JTextField userSuggestion;
     protected  JTextField codeTextField;
@@ -495,7 +495,6 @@ public class FoilMakerView extends JFrame  {
 
         JPanel roundResult = new JPanel(new FlowLayout());
         roundResult.setBorder(BorderFactory.createTitledBorder("Round Result"));
-        roundResultOutput = new JTextArea(6, 32);
         roundResultOutput.setBackground(Color.CYAN);
         JScrollPane scrollPane = new JScrollPane(roundResultOutput);
         scrollPane.setBackground(Color.black);
@@ -504,7 +503,6 @@ public class FoilMakerView extends JFrame  {
 
         JPanel overAllResults = new JPanel(new FlowLayout());
         overAllResults.setBorder(BorderFactory.createTitledBorder("Overall Results"));
-        overAllResultsOutput = new JTextArea(8, 32);
         overAllResultsOutput.setBackground(Color.GREEN);
         JScrollPane scrollPane2 = new JScrollPane(overAllResultsOutput);
         scrollPane2.setBackground(Color.black);
@@ -514,8 +512,7 @@ public class FoilMakerView extends JFrame  {
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
-        nextRound = new JButton("Next Round");
-        buttonPanel.add(nextRound);
+        addButtonToPane("Next Round",buttonPanel);
 
         mainPanel.add(roundResult);
         mainPanel.add(overAllResults);
