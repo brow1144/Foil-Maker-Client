@@ -206,6 +206,14 @@ public class FoilMakerController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: Server couldn't understand the request",
                         "Error: Invalid Message Format", JOptionPane.ERROR_MESSAGE);
             }
+            
+            if (response.contains("RESPONSE--LOGOUT")) {
+                if (response.contains("USERNOTLOGGEDIN")) {
+                    JOptionPane.showMessageDialog(null, "Error: User Not Logged In",
+                            "Error: Invalid User Token", JOptionPane.ERROR_MESSAGE);
+                }
+
+            }
         } else {
 
             if (response.contains("NEWPARTICIPANT")) {
@@ -275,6 +283,15 @@ public class FoilMakerController implements ActionListener {
                     }
                     view.goToResultPanel();
                 }
+                
+                if (response.contains("GAMEOVER")) {
+                view.goToResultPanel();
+                view.nextRoundButton.setEnabled(false);
+                view.bottomMessage = new JLabel("GAMEOVER!");
+                view.bottomMessagePanel.removeAll();
+                view.bottomMessagePanel.add(view.bottomMessage);
+                logOut();
+            }
 
             }
 
