@@ -244,6 +244,7 @@ public class FoilMakerView extends JFrame  {
 
 
         startNewGameButton = addButtonToPane("Start Game", startGameButtonPanel);
+        startNewGameButton.setEnabled(false);
 
 
         topHalf.add(createdCodeLabelPanel);
