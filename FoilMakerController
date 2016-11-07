@@ -255,7 +255,23 @@ public class FoilMakerController implements ActionListener {
                         response = response.substring(response.indexOf("--") + 2);
                         view.overAllResultsOutput.append(" | Fooled by " + response + " player(s)");
                     } else {
-
+                    response = response.substring(response.indexOf("--") + 2);
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.setText(firstName + " => Score: " + response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled " + response.substring(0,response.indexOf("--")) + " player(s)");
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled by " + response.substring(0,response.indexOf("--")) + " player(s)");
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append("\n"+response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.roundResultOutput.setText(response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" => Score: " + response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled " + response.substring(0,response.indexOf("--")) + " player(s)");
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled by " + response + " player(s)");
                     }
                     view.goToResultPanel();
                 }
