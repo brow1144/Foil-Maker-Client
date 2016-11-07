@@ -513,7 +513,7 @@ public class FoilMakerView extends JFrame  {
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
-        addButtonToPane("Next Round",buttonPanel);
+        nextRoundButton = addButtonToPane("Next Round",buttonPanel);
 
         mainPanel.add(roundResult);
         mainPanel.add(overAllResults);
