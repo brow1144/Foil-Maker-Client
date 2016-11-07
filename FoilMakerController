@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 
 /**
  * Created by Nicholas on 10/24/2016.
@@ -15,12 +14,6 @@ public class FoilMakerController implements ActionListener {
     protected FoilMakerView view;
     protected FoilMakerModel model;
     protected Socket socket;
-
-    private int round = 0;
-
-
-
-
 
     public void logIn(String username, String password) {
         sendRequest("LOGIN--" + username + "--" + password);
@@ -54,7 +47,6 @@ public class FoilMakerController implements ActionListener {
     }
 
     public void logOut() {
-
         sendRequest("LOGOUT--");
     }
 
@@ -94,8 +86,6 @@ public class FoilMakerController implements ActionListener {
         controller.view = new FoilMakerView(controller);
         controller.listen();
     }
-
-
 
     public void checkOutput(String response) {
         if (response.contains("RESPONSE")) {
@@ -148,8 +138,11 @@ public class FoilMakerController implements ActionListener {
             }
 
             if (response.contains("JOINGAME")) {
+                //FIX FIX FIX FIX
                 if (response.contains("SUCCESS")) {
                     view.usernameForController = model.getUsername();
+                    //view.showMessage(model.getUsername());
+                    //System.out.println(model.getUsername() + " joined");
                     view.goToWaitingForLeader();
                 } else if (response.contains("USERNOTLOGGEDIN")) {
                     JOptionPane.showMessageDialog(null, "Error: User Not Logged In",
@@ -206,14 +199,6 @@ public class FoilMakerController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: Server couldn't understand the request",
                         "Error: Invalid Message Format", JOptionPane.ERROR_MESSAGE);
             }
-            
-            if (response.contains("RESPONSE--LOGOUT")) {
-                if (response.contains("USERNOTLOGGEDIN")) {
-                    JOptionPane.showMessageDialog(null, "Error: User Not Logged In",
-                            "Error: Invalid User Token", JOptionPane.ERROR_MESSAGE);
-                }
-
-            }
         } else {
 
             if (response.contains("NEWPARTICIPANT")) {
@@ -234,36 +219,41 @@ public class FoilMakerController implements ActionListener {
                 answer = response.substring(response.indexOf("--") + 2);
                 model.setQuestion(question);
                 model.setCorrectAnswer(answer);
+                view.goToLaunchGame(question);
+            }
 
-                round += 1;
-
-                if (round == 1) {
-
-                    view.goToLaunchGame(question);
-
+            if(response.contains("ROUNDOPTIONS")){
+                response = response.substring(14);
+                while(response.contains("--")){
+                    model.addChoices(response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
                 }
-                if(response.contains("ROUNDRESULT")){
-                    response = response.substring(13);
-                    String firstName = response.substring(0,response.indexOf("--"));
-                    if (firstName.equals(model.getUsername())) {
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.roundResultOutput.setText(response.substring(0,response.indexOf("--")));
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.overAllResultsOutput.setText(firstName + " => Score: " + response.substring(0,response.indexOf("--")));
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.overAllResultsOutput.append(" | Fooled " + response.substring(0,response.indexOf("--")) + " player(s)");
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.overAllResultsOutput.append(" | Fooled by " + response.substring(0,response.indexOf("--")) + " player(s)");
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.overAllResultsOutput.append("\n" + response.substring(0,response.indexOf("--")));
-                        response = response.substring(response.indexOf("--") + 2);
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.overAllResultsOutput.append(" => Score: " + response.substring(0,response.indexOf("--")));
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.overAllResultsOutput.append(" | Fooled " + response.substring(0,response.indexOf("--")) + " player(s)");
-                        response = response.substring(response.indexOf("--") + 2);
-                        view.overAllResultsOutput.append(" | Fooled by " + response + " player(s)");
-                    } else {
+                model.addChoices(response);
+                view.goToOptionPanel();
+            }
+
+            if(response.contains("ROUNDRESULT")){
+                response = response.substring(13);
+                String firstName = response.substring(0,response.indexOf("--"));
+                if (firstName.equals(model.getUsername())) {
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.roundResultOutput.setText(response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.setText(firstName + " => Score: " + response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled " + response.substring(0,response.indexOf("--")) + " player(s)");
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled by " + response.substring(0,response.indexOf("--")) + " player(s)");
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append("\n" + response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" => Score: " + response.substring(0,response.indexOf("--")));
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled " + response.substring(0,response.indexOf("--")) + " player(s)");
+                    response = response.substring(response.indexOf("--") + 2);
+                    view.overAllResultsOutput.append(" | Fooled by " + response + " player(s)");
+                } else {
                     response = response.substring(response.indexOf("--") + 2);
                     response = response.substring(response.indexOf("--") + 2);
                     view.overAllResultsOutput.setText(firstName + " => Score: " + response.substring(0,response.indexOf("--")));
@@ -281,37 +271,9 @@ public class FoilMakerController implements ActionListener {
                     view.overAllResultsOutput.append(" | Fooled " + response.substring(0,response.indexOf("--")) + " player(s)");
                     response = response.substring(response.indexOf("--") + 2);
                     view.overAllResultsOutput.append(" | Fooled by " + response + " player(s)");
-                    }
-                    view.goToResultPanel();
                 }
-                
-                if (response.contains("GAMEOVER")) {
-                view.goToResultPanel();
-                view.nextRoundButton.setEnabled(false);
-                view.bottomMessage = new JLabel("GAMEOVER!");
-                view.bottomMessagePanel.removeAll();
-                view.bottomMessagePanel.add(view.bottomMessage);
-                logOut();
-            }
-
-            }
-
-            if (response.contains("ROUNDOPTIONS")) {
-                model.removeChoices();
-
-                response = response.substring(14);
-                while (response.contains("--")) {
-                    model.addChoices(response.substring(0, response.indexOf("--")));
-                    response = response.substring(response.indexOf("--") + 2);
-                }
-                model.addChoices(response);
-                view.goToOptionPanel();
-            }
-
-            if (response.contains("ROUNDRESULT")) {
                 view.goToResultPanel();
             }
-
         }
     }
 
@@ -342,7 +304,6 @@ public class FoilMakerController implements ActionListener {
         if (buttonText.equals("Join Game")) {
             model.setGameToken(view.codeTextField.getText());
             joinGame(model.getUserToken(), view.codeTextField.getText());
-
         }
 
         //If Host Starts game
@@ -358,10 +319,6 @@ public class FoilMakerController implements ActionListener {
 
         if (buttonText.equals("Submit Option")) {
             sendChoice(model.getUserToken(), model.getGameToken(), model.getChoice());
-        }
-
-        if (buttonText.equals("Next Round")) {
-            view.goToLaunchGame(model.getQuestion());
         }
     }
 
