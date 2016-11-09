@@ -14,7 +14,7 @@ import java.awt.*;
 
 public class FoilMakerView extends JFrame  {
 
-    protected FoilMakerController controller;
+    protected  FoilMakerController controller;
 
     protected  JFrame topFrame;
 
@@ -41,7 +41,7 @@ public class FoilMakerView extends JFrame  {
     protected  JButton nextRound;
     protected  JButton submitChoiceButton;
 
-    protected JRadioButton[] choices;
+    protected  JRadioButton[] choices;
 
     protected  JTextArea createdCode;
     protected  JTextArea output;
@@ -56,7 +56,7 @@ public class FoilMakerView extends JFrame  {
 
     protected  String currentUser;
 
-    protected String usernameForController;
+    protected  String usernameForController;
 
 
 
@@ -179,7 +179,7 @@ public class FoilMakerView extends JFrame  {
         topHalf.removeAll();
         topHalf.setLayout(new GridLayout(4, 0));
         bottomMessagePanel.removeAll();
-        bottomMessage = new JLabel("Game Started: You are the Leader");
+        bottomMessage = new JLabel("Game Started: You are the Leader. ( This is a 2 Person Game )");
         bottomMessagePanel.add(bottomMessage);
 
         topPanel.removeAll();
