@@ -12,6 +12,7 @@ public class FoilMakerModel {
     }
 
     public void removeChoices(){
+
         choices.removeAll(choices);
     }
 
