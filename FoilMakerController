@@ -199,6 +199,17 @@ public class FoilMakerController implements ActionListener {
                 JOptionPane.showMessageDialog(null, "Error: Server couldn't understand the request",
                         "Error: Invalid Message Format", JOptionPane.ERROR_MESSAGE);
             }
+
+            //TODO CHANGE
+            if (response.contains("GAMEOVER")) {
+                if (response.contains("USERNOTLOGGEDIN")) {
+                    JOptionPane.showMessageDialog(null, "Error: User Not Logged In",
+                            "Error: Invalid User Token", JOptionPane.ERROR_MESSAGE);
+                } else if (response.contains("SUCCESS")) {
+                    view.nextRound.setEnabled(false);
+                }
+
+            }
         } else {
 
             if (response.contains("NEWPARTICIPANT")) {
@@ -230,6 +241,8 @@ public class FoilMakerController implements ActionListener {
                 }
                 model.addChoices(response);
                 view.goToOptionPanel();
+                //TODO CHANGE
+                model.removeChoices();
             }
 
             if(response.contains("ROUNDRESULT")){
@@ -274,6 +287,7 @@ public class FoilMakerController implements ActionListener {
                 }
                 view.goToResultPanel();
             }
+
         }
     }
 
@@ -319,6 +333,11 @@ public class FoilMakerController implements ActionListener {
 
         if (buttonText.equals("Submit Option")) {
             sendChoice(model.getUserToken(), model.getGameToken(), model.getChoice());
+        }
+
+        //TODO CHANGE
+        if (buttonText.equals("Next Round")) {
+            logOut();
         }
     }
 
