@@ -515,6 +515,7 @@ public class FoilMakerView extends JFrame  {
         //addButtonToPane("Next Round",buttonPanel);
 
         nextRound = new JButton("Next Round");
+        nextRound.addActionListener(controller);
         buttonPanel.add(nextRound);
 
         /*
