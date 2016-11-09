@@ -10,6 +10,7 @@ import java.util.ArrayList;
  * @version 10/24/16
  *
  */
+
 public class FoilMakerModel {
     private String username, userToken, gameToken, score, question, correctAnswer, suggestion, choice;
     private ArrayList<String> choices = new ArrayList<>();
@@ -51,14 +52,6 @@ public class FoilMakerModel {
         return gameToken;
     }
 
-    public void setScore() {
-        this.score = score;
-    }
-
-    public String getScore() {
-        return score;
-    }
-
     public void setQuestion(String question) {
         this.question = question;
     }
@@ -69,10 +62,6 @@ public class FoilMakerModel {
 
     public void setCorrectAnswer(String correctAnswer) {
         this.correctAnswer = correctAnswer;
-    }
-
-    public String getCorrectAnswer() {
-        return correctAnswer;
     }
 
     public String getSuggestion() {
