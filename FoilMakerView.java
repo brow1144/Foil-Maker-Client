@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 /**
  * CS180 Project03
@@ -12,39 +14,27 @@ import java.awt.*;
  *
  */
 
-public class FoilMakerView extends JFrame  {
+public class FoilMakerView extends JFrame implements WindowListener {
 
-    protected  FoilMakerController controller;
+    protected FoilMakerController controller;
 
     protected  JFrame topFrame;
 
-    protected  JPanel topPanel;
-    protected  JPanel topHalf;
-
-    protected  JPanel bottomMessagePanel;
+    protected  JPanel topPanel, topHalf, bottomMessagePanel;
 
     protected  JTextField usernameTextField;
     protected  JPasswordField passwordTextField;
-    protected  JLabel usernameLabel;
-    protected  JLabel passwordLabel;
-    protected  JLabel createdCodeLabel;
-    protected  JLabel bottomMessage;
-    protected  JLabel username;
+    protected  JLabel usernameLabel, passwordLabel, createdCodeLabel, bottomMessage, username;
 
-    protected  JButton loginButton;
-    protected  JButton registerButton;
-    protected  JButton startANewGameButton;
-    protected  JButton startNewGameButton;
-    protected  JButton joinAGameButton;
+    protected  JButton loginButton, registerButton, startANewGameButton, startNewGameButton, joinAGameButton;
     protected  JButton joinGameButton;
     protected  JButton submitSuggestionButton;
     protected  JButton nextRound;
     protected  JButton submitChoiceButton;
 
-    protected  JRadioButton[] choices;
+    protected JRadioButton[] choices;
 
-    protected  JTextArea createdCode;
-    protected  JTextArea output;
+    protected  JTextArea createdCode, output;
     protected  JTextArea roundResultOutput = new JTextArea(6,32);
     protected  JTextArea overAllResultsOutput = new JTextArea(8,32);
 
@@ -56,24 +46,25 @@ public class FoilMakerView extends JFrame  {
 
     protected  String currentUser;
 
-    protected  String usernameForController;
-
+    protected String usernameForController;
+    private boolean loggedIn;
 
 
     public FoilMakerView(FoilMakerController controller) {
 
+        this.loggedIn = false;
         this.controller = controller;
         goToLoginPanel();
-
     }
 
 
     public void goToLoginPanel() {
 
         topFrame = new JFrame();
-        topFrame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        topFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         topFrame.setSize(450, 600);
         topFrame.setTitle("FoilMaker");
+        topFrame.addWindowListener(this);
 
         topFrame.setLocationRelativeTo(null);
         topFrame.setLayout(new BorderLayout());
@@ -81,7 +72,6 @@ public class FoilMakerView extends JFrame  {
         topPanel = new JPanel();
         username = new JLabel("FoilMaker!");
         topPanel.add(username);
-
 
         topHalf = new JPanel();
         topHalf.setLayout(new FlowLayout());
@@ -98,7 +88,6 @@ public class FoilMakerView extends JFrame  {
 
         loginPanel.add(usernamePanel);
         loginPanel.add(passwordPanel);
-
 
         usernameTextField = new JTextField(20);
         passwordTextField = new JPasswordField(20);
@@ -123,8 +112,6 @@ public class FoilMakerView extends JFrame  {
         topFrame.add(topHalf);
         topHalf.add(buttonPanel);
 
-
-
         bottomMessagePanel = new JPanel();
         bottomMessage = new JLabel("Welcome!");
 
@@ -147,6 +134,7 @@ public class FoilMakerView extends JFrame  {
 
     public void goToNewGamePanel() {
 
+        loggedIn = true;
         topPanel.setVisible(false);
 
         topPanel.removeAll();
@@ -157,19 +145,14 @@ public class FoilMakerView extends JFrame  {
         topPanel.add(username);
         topPanel.setVisible(true);
 
-
         topHalf.setVisible(false);
         topHalf.removeAll();
-
-
 
 
         startANewGameButton = addButtonToPane("Start a New Game", topHalf);
         joinAGameButton = addButtonToPane("Join a Game", topHalf);
 
         topHalf.setVisible(true);
-
-
     }
 
     public void goToStartNewGamePanel() {
@@ -179,15 +162,12 @@ public class FoilMakerView extends JFrame  {
         topHalf.removeAll();
         topHalf.setLayout(new GridLayout(4, 0));
         bottomMessagePanel.removeAll();
-        bottomMessage = new JLabel("Game Started: You are the Leader. ( This is a 2 Person Game )");
+        bottomMessage = new JLabel("Game Started: You are the Leader");
         bottomMessagePanel.add(bottomMessage);
 
         topPanel.removeAll();
         username = new JLabel(currentUser);
         topPanel.add(username);
-
-
-
 
         JPanel createdCodeLabelPanel = new JPanel();
         createdCodeLabelPanel.setLayout(new GridLayout(3, 0));
@@ -204,11 +184,8 @@ public class FoilMakerView extends JFrame  {
         participantsScrollPane.setBackground(Color.black);
         participantsPanel.add(participantsScrollPane);
 
-
         usernameForController = "";
         showMessage(usernameForController);
-
-
 
 
         JPanel startGameButtonPanel = new JPanel();
@@ -221,12 +198,8 @@ public class FoilMakerView extends JFrame  {
         createdCodeLabelPanel.add(empty);
         createdCodeLabelPanel.add(createdCodeLabel);
 
-
         createdCode = new JTextArea("xx");
         createdCodeTextAreaPanel.add(createdCode);
-
-
-
 
         startNewGameButton = addButtonToPane("Start Game", startGameButtonPanel);
         startNewGameButton.setEnabled(false);
@@ -279,7 +252,6 @@ public class FoilMakerView extends JFrame  {
 
         JLabel labelForCode = new JLabel("Enter the Game Key to Join");
 
-
         labelForCodePanel.add(CodeTextAreaPanelBottom);
         codeTextAreaPanel.add(labelForCode);
         joinGameButton = addButtonToPane("Join Game", joinGameButtonPanel);
@@ -310,8 +282,6 @@ public class FoilMakerView extends JFrame  {
         username = new JLabel(currentUser);
         topPanel.add(username);
         topPanel.setVisible(true);
-
-
 
         JLabel waitingForLeaderLabel = new JLabel("Waiting for Leader ...", SwingConstants.CENTER);
 
@@ -378,13 +348,11 @@ public class FoilMakerView extends JFrame  {
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
 
-
         submitSuggestionButton = addButtonToPane("Submit Suggestion", buttonPanel);
 
         topHalf.add(buttonPanel);
 
         topFrame.setVisible(true);
-
 
     }
 
@@ -423,7 +391,6 @@ public class FoilMakerView extends JFrame  {
             group.add(choices[i]);
             mainPanel.add(choices[i]);
             choices[i].addActionListener(controller);
-
         }
 
         submitChoiceButton = new JButton("Submit Option");
@@ -432,12 +399,9 @@ public class FoilMakerView extends JFrame  {
         bottomPanel.add(submitChoiceButton);
 
 
-
-
         topHalf.add(mainPanel);
 
         topHalf.add(bottomPanel);
-
 
 
         topFrame.setVisible(true);
@@ -498,7 +462,6 @@ public class FoilMakerView extends JFrame  {
 
         topFrame.setVisible(true);
 
-
     }
 
     public void showMessage(String msg) {
@@ -511,4 +474,28 @@ public class FoilMakerView extends JFrame  {
         FoilMakerView x = new FoilMakerView(new FoilMakerController());
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {}
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        if(loggedIn) controller.logOut();
+        this.dispose();
+        System.exit(0);
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {}
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 }
