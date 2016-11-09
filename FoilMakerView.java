@@ -1,8 +1,5 @@
-
-
-import javafx.beans.property.ReadOnlyFloatWrapper;
-
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 
 /**
@@ -19,7 +16,6 @@ import java.awt.*;
 public class FoilMakerView extends JFrame  {
 
     protected FoilMakerController controller;
-    protected FoilMakerModel model;
 
     protected  JFrame topFrame;
 
@@ -513,7 +509,11 @@ public class FoilMakerView extends JFrame  {
 
         JPanel buttonPanel = new JPanel(new FlowLayout());
         //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
-        addButtonToPane("Next Round",buttonPanel);
+        //addButtonToPane("Next Round",buttonPanel);
+        
+        //TODO Change
+        nextRound = new JButton("Next Round");
+        buttonPanel.add(nextRound);
 
         mainPanel.add(roundResult);
         mainPanel.add(overAllResults);
