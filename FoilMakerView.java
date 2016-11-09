@@ -1,13 +1,12 @@
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 
 /**
  * CS180 Project03
  *
- * Foil Login Program.
+ * Foil Maker Program.
  *
- * @author Kyle Brown, brow1144, G01
+ * @author Kyle Brown And Nick Fordyce, brow1144@purdue.edu and nfordyc@purdue.edu, G01
  *
  * @version 10/24/16
  *
@@ -79,29 +78,23 @@ public class FoilMakerView extends JFrame  {
         topFrame.setLocationRelativeTo(null);
         topFrame.setLayout(new BorderLayout());
 
-//Top Panel (aka usernamePanel)
         topPanel = new JPanel();
-        //topPanel.setBorder(BorderFactory.createTitledBorder("Top Panel"));
         username = new JLabel("FoilMaker!");
         topPanel.add(username);
 
 
-//Login Stuff
         topHalf = new JPanel();
         topHalf.setLayout(new FlowLayout());
         topHalf.setBorder(BorderFactory.createRaisedBevelBorder());
 
         JPanel loginPanel = new JPanel();
         loginPanel.setLayout(new GridLayout(0, 1));
-        //loginPanel.setBorder(BorderFactory.createTitledBorder("Login"));
 
         JPanel usernamePanel = new JPanel();
         usernamePanel.setLayout(new FlowLayout());
-        //usernamePanel.setBorder(BorderFactory.createTitledBorder("Username Panel"));
 
         JPanel passwordPanel = new JPanel();
         passwordPanel.setLayout(new FlowLayout());
-        //passwordPanel.setBorder(BorderFactory.createTitledBorder("Password Panel"));
 
         loginPanel.add(usernamePanel);
         loginPanel.add(passwordPanel);
@@ -120,7 +113,6 @@ public class FoilMakerView extends JFrame  {
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout());
-        //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
 
         loginButton = addButtonToPane("Login", buttonPanel);
 
@@ -132,10 +124,8 @@ public class FoilMakerView extends JFrame  {
         topHalf.add(buttonPanel);
 
 
-//Bottom Message Stuff
 
         bottomMessagePanel = new JPanel();
-        //bottomMessagePanel.setBorder(BorderFactory.createTitledBorder("Bottom Message"));
         bottomMessage = new JLabel("Welcome!");
 
         bottomMessagePanel.add(bottomMessage);
@@ -183,7 +173,6 @@ public class FoilMakerView extends JFrame  {
     }
 
     public void goToStartNewGamePanel() {
-        //adfasdfasdf
         topHalf.setVisible(false);
         topPanel.setVisible(false);
 
@@ -248,14 +237,12 @@ public class FoilMakerView extends JFrame  {
         topHalf.add(participantsPanel);
         topHalf.add(startGameButtonPanel);
 
-        //asfasdfasdfsadf
         topHalf.setVisible(true);
         topPanel.setVisible(true);
 
     }
 
     public void goToJoinAGame() {
-        //agsadgasdga
         topPanel.setVisible(false);
 
         topHalf.removeAll();
@@ -273,11 +260,9 @@ public class FoilMakerView extends JFrame  {
 
         JPanel labelForCodePanel = new JPanel();
         labelForCodePanel.setLayout(new BoxLayout(labelForCodePanel, BoxLayout.Y_AXIS));
-        //labelForCodePanel.setBorder(BorderFactory.createTitledBorder("Label for Code"));
 
         JPanel codeTextAreaPanel = new JPanel();
         codeTextAreaPanel.setLayout(new FlowLayout());
-        //codeTextAreaPanel.setBorder(BorderFactory.createTitledBorder("Code Text Area"));
 
         labelForCodePanel.add(codeTextAreaPanel);
 
@@ -285,18 +270,14 @@ public class FoilMakerView extends JFrame  {
         codeTextField.setColumns(3);
 
         JPanel CodeTextAreaPanelBottom = new JPanel();
-        //CodeTextAreaPanelBottom.setLayout(new FlowLayout());
-        //CodeTextAreaPanelBottom.setBorder(BorderFactory.createTitledBorder("New Panel"));
 
         CodeTextAreaPanelBottom.add(codeTextField);
 
 
         JPanel joinGameButtonPanel = new JPanel();
         joinGameButtonPanel.setLayout(new FlowLayout());
-        //joinGameButtonPanel.setBorder(BorderFactory.createTitledBorder("Join Game Button Panel"));
 
         JLabel labelForCode = new JLabel("Enter the Game Key to Join");
-        //JTextField codeTextField = new JTextField();
 
 
         labelForCodePanel.add(CodeTextAreaPanelBottom);
@@ -348,7 +329,6 @@ public class FoilMakerView extends JFrame  {
 
         topHalf.removeAll();
 
-        //TODO ADDED THIS
         topHalf.setLayout(new GridLayout(3, 0));
 
         currentUser = usernameTextField.getText();
@@ -490,16 +470,12 @@ public class FoilMakerView extends JFrame  {
         bottomMessagePanel.add(bottomMessage);
 
 
-        //JPanel mainPanel = new JPanel(new GridLayout(3 , 0));
-        //mainPanel.setBorder(BorderFactory.createTitledBorder("Main Panel"));
-
         JPanel roundResult = new JPanel(new FlowLayout());
         roundResult.setBorder(BorderFactory.createTitledBorder("Round Result"));
         roundResultOutput.setBackground(Color.CYAN);
         JScrollPane scrollPane = new JScrollPane(roundResultOutput);
         scrollPane.setBackground(Color.black);
         roundResult.add(scrollPane);
-        //showMessage("You were Fooled by Someone");
 
         JPanel overAllResults = new JPanel(new FlowLayout());
         overAllResults.setBorder(BorderFactory.createTitledBorder("Overall Results"));
@@ -508,22 +484,11 @@ public class FoilMakerView extends JFrame  {
         scrollPane2.setBackground(Color.black);
         overAllResults.add(scrollPane2);
 
-        //showMessage("Kyle => Score: 1");
-
         JPanel buttonPanel = new JPanel(new FlowLayout());
-        //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
-        //addButtonToPane("Next Round",buttonPanel);
 
         nextRound = new JButton("Next Round");
         nextRound.addActionListener(controller);
         buttonPanel.add(nextRound);
-
-        /*
-        mainPanel.add(roundResult);
-        mainPanel.add(overAllResults);
-        mainPanel.add(buttonPanel);
-        */
-
 
         topHalf.add(roundResult);
         topHalf.add(overAllResults);
