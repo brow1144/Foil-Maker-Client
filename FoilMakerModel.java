@@ -1,7 +1,14 @@
 import java.util.ArrayList;
 
 /**
- * Created by Nicholas on 10/24/2016.
+ * CS180 Project03
+ *
+ * Foil Maker Program.
+ *
+ * @author Kyle Brown And Nick Fordyce, brow1144@purdue.edu and nfordyc@purdue.edu, G01
+ *
+ * @version 10/24/16
+ *
  */
 public class FoilMakerModel {
     private String username, userToken, gameToken, score, question, correctAnswer, suggestion, choice;
