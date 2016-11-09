@@ -348,6 +348,9 @@ public class FoilMakerView extends JFrame  {
 
         topHalf.removeAll();
 
+        //TODO ADDED THIS
+        topHalf.setLayout(new GridLayout(3, 0));
+
         currentUser = usernameTextField.getText();
         topPanel.removeAll();
         username = new JLabel(currentUser);
@@ -433,8 +436,6 @@ public class FoilMakerView extends JFrame  {
         JPanel bottomPanel = new JPanel(new FlowLayout());
 
 
-
-
         choices = new JRadioButton[controller.model.getChoices().size()];
         ButtonGroup group = new ButtonGroup();
         for (int i = 0; i < controller.model.getChoices().size(); i++) {
@@ -472,6 +473,8 @@ public class FoilMakerView extends JFrame  {
 
         topHalf.removeAll();
 
+        topHalf.setLayout(new GridLayout(3, 0));
+
 
         currentUser = usernameTextField.getText();
 
@@ -487,7 +490,7 @@ public class FoilMakerView extends JFrame  {
         bottomMessagePanel.add(bottomMessage);
 
 
-        JPanel mainPanel = new JPanel(new GridLayout(3 , 0));
+        //JPanel mainPanel = new JPanel(new GridLayout(3 , 0));
         //mainPanel.setBorder(BorderFactory.createTitledBorder("Main Panel"));
 
         JPanel roundResult = new JPanel(new FlowLayout());
@@ -510,16 +513,20 @@ public class FoilMakerView extends JFrame  {
         JPanel buttonPanel = new JPanel(new FlowLayout());
         //buttonPanel.setBorder(BorderFactory.createTitledBorder("Button Panel"));
         //addButtonToPane("Next Round",buttonPanel);
-        
-        //TODO Change
+
         nextRound = new JButton("Next Round");
         buttonPanel.add(nextRound);
 
+        /*
         mainPanel.add(roundResult);
         mainPanel.add(overAllResults);
         mainPanel.add(buttonPanel);
+        */
 
-        topHalf.add(mainPanel);
+
+        topHalf.add(roundResult);
+        topHalf.add(overAllResults);
+        topHalf.add(buttonPanel);
 
         topPanel.setVisible(true);
 
